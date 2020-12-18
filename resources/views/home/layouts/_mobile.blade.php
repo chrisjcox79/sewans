@@ -83,13 +83,13 @@
                         </li>
                     </ul>
                 </li>
-                <li class="lvl1 parent megamenu"><a href="product-layout1.html">Product <i
+                <li class="lvl1 parent megamenu"><a href="{{route('product.index')}}">Product <i
                             class="anm anm-plus-l"></i></a>
                     <ul>
-                        <li><a href="product-layout1.html" class="site-nav">Product Page<i
+                        <li><a href="{{route('product.index')}}" class="site-nav">Product Page<i
                                     class="anm anm-plus-l"></i></a>
                             <ul>
-                                <li><a href="product-layout1.html" class="site-nav">Product Layout1</a></li>
+                                <li><a href="{{route('product.index')}}" class="site-nav">Product Layout1</a></li>
                                 <li><a href="product-layout2.html" class="site-nav">Product Layout2</a></li>
                                 <li><a href="product-layout3.html" class="site-nav">Product Layout3</a></li>
                                 <li><a href="product-layout4.html" class="site-nav">Product Layout4</a></li>
@@ -108,12 +108,12 @@
                                 <li><a href="product-standard.html" class="site-nav">Standard Product</a></li>
                                 <li><a href="product-variable.html" class="site-nav">Variable Product</a></li>
                                 <li><a href="product-grouped.html" class="site-nav">Grouped Product</a></li>
-                                <li><a href="product-layout1.html" class="site-nav">New Product</a></li>
+                                <li><a href="{{route('product.index')}}" class="site-nav">New Product</a></li>
                                 <li><a href="product-layout2.html" class="site-nav">Sale Product</a></li>
                                 <li><a href="product-outofstock.html" class="site-nav">Out Of Stock Product</a></li>
                                 <li><a href="product-external-affiliate.html" class="site-nav">External / Affiliate
                                         Product</a></li>
-                                <li><a href="product-layout1.html" class="site-nav">Variable Image</a></li>
+                                <li><a href="{{route('product.index')}}" class="site-nav">Variable Image</a></li>
                                 <li><a href="product-layout4.html" class="site-nav">Variable Select</a></li>
                                 <li><a href="prodcut-360-degree-view.html" class="site-nav last">360 Degree view</a>
                                 </li>

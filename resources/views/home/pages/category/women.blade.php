@@ -1733,13 +1733,4 @@
                             <a href="#" class="btn loadMore">Load More</a>
                         </div>
                     </div>
-                    <!--End Load More Button-->
-                </div>
-            </div>
-            <!--End Main Content-->
-        </div>
-    
-    </div><!--End Body Container-->
-    
-</div>
-@stop
+                    <!--End Loa

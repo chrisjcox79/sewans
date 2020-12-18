@@ -5,8 +5,7 @@
                             <div class="customer-links">
                              @if(!Auth::user())
                             <p><a href="{{route('login')}}" class="btn">{{ __('Login') }}</a></p>
-                                <p class="text-center">New User? <a href="register.html" class="register">Create an
-                                        Account</a></p>
+                            <p class="text-center">没有账号？ <a href="{{route('register')}}" class="register">注册新会员</a></p>
                                 <p class="text-center">Default welcome msg!</p>
                                 @else
                                  <p><a href="{{route('user.account')}}" class="btn">{{ __('My Account') }}</a></p>
@@ -18,7 +17,7 @@
 
                                 @endif
                             </div>
-                            <div class="currency-picker">
+                            {{-- <div class="currency-picker">
                                 <span class="ttl">Select Currency</span>
                                 <ul id="currencies" class="cnrLangList">
                                     <li class="selected"><a href="#;">INR</a></li>
@@ -29,7 +28,7 @@
                                     <li><a href="#;">EUR</a></li>
                                     <li><a href="#;">JPY</a></li>
                                 </ul>
-                            </div>
+                            </div> --}}
                             <div class="language-picker">
                                 <span class="ttl">SELECT LANGUAGE</span>
                                 <ul id="language" class="cnrLangList">

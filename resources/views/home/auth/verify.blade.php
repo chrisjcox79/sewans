@@ -1,11 +1,11 @@
-@extends('layouts.app')
+@extends('home.layouts.app')
 @section('content')
     <div id="page-content">
         <!--Body Container-->
         <!--Breadcrumbs-->
         <div class="breadcrumbs-wrapper">
             <div class="container">
-                <div class="breadcrumbs"><a href="{{route('root')}}" title="Back to the home page">Home</a> <span
+                <div class="breadcrumbs"><a href="{{route('home')}}" title="Back to the home page">Home</a> <span
                         aria-hidden="true">|</span> <span>{{ __('Verify Your Email Address') }}</span></div>
             </div>
         </div>

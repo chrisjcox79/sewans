@@ -1,4 +1,4 @@
-@extends('layouts.app')
+@extends('home.layouts.app')
 @section('title', '注册')
 @section('content')
 <div id="page-content">
@@ -6,7 +6,7 @@
         <!--Breadcrumbs-->
         <div class="breadcrumbs-wrapper">
         	<div class="container">
-            	<div class="breadcrumbs"><a href="{{route('root')}}" title="Back to the home page">Home</a> <span aria-hidden="true">|</span> <span>{{ __('Register') }}</span></div>
+            	<div class="breadcrumbs"><a href="{{route('home')}}" title="Back to the home page">Home</a> <span aria-hidden="true">|</span> <span>{{ __('Register') }}</span></div>
             </div>
         </div>
         <!--End Breadcrumbs-->

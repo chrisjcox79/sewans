@@ -388,7 +388,7 @@
                             <a href="{{route('wishlist.index')}}">
                             <i class="icon anm anm-heart-l"></i>
                             <span class="wishlist-count">0</span>
-                        </a>    
+                        </a>
                         </div>
                         <!--End Wishlist-->
                         <!--Minicart Dropdown-->
