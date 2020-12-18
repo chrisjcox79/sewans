@@ -2,7 +2,7 @@
 @section('title', '首页')
 @section('content')
 
-<div id="page-content">        
+<div id="page-content">
     <!--Body Container-->
     <!--Breadcrumbs-->
     <div class="breadcrumbs-wrapper">
@@ -21,7 +21,7 @@
                                     <div class="zoompro-span">
                                         <img class="zoompro" src="home/assets/images/product-images/product9.jpg" data-zoom-image="home/assets/images/product-images/product9.jpg" alt="" />
                                     </div>
-                                </div>                                    
+                                </div>
                                 <div class="zoompro-wrap product-zoom-right pl-20">
                                     <div class="zoompro-span">
                                         <img class="zoompro" src="home/assets/images/product-images/product9-1.jpg" data-zoom-image="home/assets/images/product-images/product9-1.jpg" alt="" />
@@ -67,7 +67,7 @@
                                     <a href="home/assets/images/product-images/product9-5.jpg" data-size="1000x1280"></a>
                                     <a href="home/assets/images/product-images/product9-6.jpg" data-size="1000x1280"></a>
                                 </div>
-                                
+
                                 <div class="social-sharing">
                                     <span class="label">Share:</span>
                                     <a target="_blank" href="#" class="btn btn--small btn--secondary btn--share share-facebook" title="Share on Facebook">
@@ -107,7 +107,7 @@
                                         <span>You Save</span>
                                         <span class="product-single__save-amount"><span class="money">$100.00</span></span>
                                         <span class="off">(<span>16</span>%)</span>
-                                    </span>  
+                                    </span>
                                 </p>
                             </div>
                             <div class="product-single__description rte">
@@ -183,7 +183,7 @@
                                                 <a class="qtyBtn plus" href="javascript:void(0);"><i class="fa anm anm-plus-r" aria-hidden="true"></i></a>
                                             </div>
                                         </div>
-                                    </div>                                
+                                    </div>
                                     <div class="product-form__item--submit">
                                         <button type="button" name="add" class="btn product-form__cart-submit">
                                             <span>Add to cart</span>
@@ -209,7 +209,7 @@
                                 <span>Type:</span> <a href="#">Dress</a>
                             </div>
                             <div class="category-products-list">
-                                <span>Category:</span> <a href="#">All Products</a>, <a href="#">All Products</a>, <a href="#">Hot Collection</a>, <a href="#">New Arrivals</a>, <a href="#">Women</a>  
+                                <span>Category:</span> <a href="#">All Products</a>, <a href="#">All Products</a>, <a href="#">Hot Collection</a>, <a href="#">New Arrivals</a>, <a href="#">Women</a>
                             </div>
                         </div>
                     </div>
@@ -401,7 +401,7 @@
             </div>
         </div>
         <!--End Product Tabs-->
-        
+
         <!--Related Product Slider-->
         <div class="related-product grid-products">
             <div class="section-header">
@@ -413,7 +413,7 @@
                     <!-- start product image -->
                     <div class="product-image">
                         <!-- start product image -->
-                        <a href="product-layout1.html" class="product-img">
+                        <a href="{{route('product.index')}}" class="product-img">
                             <!-- image -->
                             <img class="primary blur-up lazyload" data-src="home/assets/images/product-images/product-detail1-10.jpg" src="home/assets/images/product-images/product-detail1-10.jpg" alt="image" title="product">
                             <!-- End image -->
@@ -475,7 +475,7 @@
                     <div class="product-details text-center">
                         <!-- product name -->
                         <div class="product-name">
-                            <a href="product-layout1.html">Edna Dress</a>
+                            <a href="{{route('product.index')}}">Edna Dress</a>
                         </div>
                         <!-- End product name -->
                         <!-- product price -->
@@ -498,7 +498,7 @@
                     <!-- start product image -->
                     <div class="product-image">
                         <!-- start product image -->
-                        <a href="product-layout1.html" class="product-img">
+                        <a href="{{route('product.index')}}" class="product-img">
                             <!-- image -->
                             <img class="primary blur-up lazyload" data-src="home/assets/images/product-images/product-detail1.jpg" src="home/assets/images/product-images/product-detail1.jpg" alt="image" title="product">
                             <!-- End image -->
@@ -559,7 +559,7 @@
                     <div class="product-details text-center">
                         <!-- product name -->
                         <div class="product-name">
-                            <a href="product-layout1.html">Elastic Waist Dress</a>
+                            <a href="{{route('product.index')}}">Elastic Waist Dress</a>
                         </div>
                         <!-- End product name -->
                         <!-- product price -->
@@ -581,7 +581,7 @@
                     <!-- start product image -->
                     <div class="product-image">
                         <!-- start product image -->
-                        <a href="product-layout1.html" class="product-img">
+                        <a href="{{route('product.index')}}" class="product-img">
                             <!-- image -->
                             <img class="primary blur-up lazyload" data-src="home/assets/images/product-images/product16.jpg" src="home/assets/images/product-images/product16.jpg" alt="image">
                             <!-- End image -->
@@ -668,7 +668,7 @@
                     <!-- start product image -->
                     <div class="product-image">
                         <!-- start product image -->
-                        <a href="product-layout1.html" class="product-img">
+                        <a href="{{route('product.index')}}" class="product-img">
                             <!-- image -->
                             <img class="primary blur-up lazyload" data-src="home/assets/images/product-images/product13.jpg" src="home/assets/images/product-images/product13.jpg" alt="image"/>
                             <!-- End image -->
@@ -729,7 +729,7 @@
                     <div class="product-details text-center">
                         <!-- product name -->
                         <div class="product-name">
-                            <a href="product-layout1.html">Cape Dress</a>
+                            <a href="{{route('product.index')}}">Cape Dress</a>
                         </div>
                         <!-- End product name -->
                         <!-- product price -->
@@ -753,7 +753,7 @@
                     <!-- start product image -->
                     <div class="product-image">
                         <!-- start product image -->
-                        <a href="product-layout1.html" class="product-img">
+                        <a href="{{route('product.index')}}" class="product-img">
                             <!-- image -->
                             <img class="primary blur-up lazyload" data-src="home/assets/images/product-images/product18.jpg" src="home/assets/images/product-images/product18.jpg" alt="image"/>
                             <!-- End image -->
@@ -817,7 +817,7 @@
                     <div class="product-details text-center">
                         <!-- product name -->
                         <div class="product-name">
-                            <a href="product-layout1.html">Paper Dress</a>
+                            <a href="{{route('product.index')}}">Paper Dress</a>
                         </div>
                         <!-- End product name -->
                         <!-- product price -->
@@ -840,7 +840,7 @@
                     <!-- start product image -->
                     <div class="product-image">
                         <!-- start product image -->
-                        <a href="product-layout1.html" class="product-img">
+                        <a href="{{route('product.index')}}" class="product-img">
                             <!-- image -->
                             <img class="primary blur-up lazyload" data-src="home/assets/images/product-images/product9.jpg" src="home/assets/images/product-images/product9.jpg" alt="image">
                             <!-- End image -->
@@ -901,7 +901,7 @@
                     <div class="product-details text-center">
                         <!-- product name -->
                         <div class="product-name">
-                            <a href="product-layout1.html">Zipper Jacket</a>
+                            <a href="{{route('product.index')}}">Zipper Jacket</a>
                         </div>
                         <!-- End product name -->
                         <!-- product price -->
@@ -924,7 +924,7 @@
                     <!-- start product image -->
                     <div class="product-image">
                         <!-- start product image -->
-                        <a href="product-layout1.html" class="product-img">
+                        <a href="{{route('product.index')}}" class="product-img">
                             <!-- image -->
                             <img class="primary blur-up lazyload" data-src="home/assets/images/product-images/product10.jpg" src="home/assets/images/product-images/product10.jpg" alt="image">
                             <!-- End image -->
@@ -985,7 +985,7 @@
                     <div class="product-details text-center">
                         <!-- product name -->
                         <div class="product-name">
-                            <a href="product-layout1.html">Zipper Jacket</a>
+                            <a href="{{route('product.index')}}">Zipper Jacket</a>
                         </div>
                         <!-- End product name -->
                         <!-- product price -->
@@ -1018,7 +1018,7 @@
                         <!-- start product image -->
                         <div class="product-image">
                             <!-- start product image -->
-                            <a href="product-layout1.html" class="product-img">
+                            <a href="{{route('product.index')}}" class="product-img">
                                 <!-- image -->
                                 <img class="primary blur-up lazyload" data-src="home/assets/images/product-images/product6.jpg" src="home/assets/images/product-images/product6.jpg" alt="image" title="product">
                                 <!-- End image -->
@@ -1033,7 +1033,7 @@
                         <div class="product-details text-center">
                             <!-- product name -->
                             <div class="product-name">
-                                <a href="product-layout1.html">Backpack With Contrast Bow</a>
+                                <a href="{{route('product.index')}}">Backpack With Contrast Bow</a>
                             </div>
                             <!-- End product name -->
                             <!-- product price -->
@@ -1048,7 +1048,7 @@
                         <!-- start product image -->
                         <div class="product-image">
                             <!-- start product image -->
-                            <a href="product-layout1.html" class="product-img">
+                            <a href="{{route('product.index')}}" class="product-img">
                                 <!-- image -->
                                 <img class="primary blur-up lazyload" data-src="home/assets/images/product-images/product17.jpg" src="home/assets/images/product-images/product17.jpg" alt="image">
                                 <!-- End image -->
@@ -1064,7 +1064,7 @@
                         <div class="product-details text-center">
                             <!-- product name -->
                             <div class="product-name">
-                                <a href="product-layout1.html">Button Up Top Black</a>
+                                <a href="{{route('product.index')}}">Button Up Top Black</a>
                             </div>
                             <!-- End product name -->
                             <!-- product price -->
@@ -1079,7 +1079,7 @@
                         <!-- start product image -->
                         <div class="product-image">
                             <!-- start product image -->
-                            <a href="product-layout1.html" class="product-img">
+                            <a href="{{route('product.index')}}" class="product-img">
                                 <!-- image -->
                                 <img class="primary blur-up lazyload" data-src="home/assets/images/product-images/product12.jpg" src="home/assets/images/product-images/product12.jpg" alt="image">
                                 <!-- End image -->
@@ -1110,7 +1110,7 @@
                         <!-- start product image -->
                         <div class="product-image">
                             <!-- start product image -->
-                            <a href="product-layout1.html" class="product-img">
+                            <a href="{{route('product.index')}}" class="product-img">
                                 <!-- image -->
                                 <img class="primary blur-up lazyload" data-src="home/assets/images/product-images/product8.jpg" src="home/assets/images/product-images/product8.jpg" alt="image"/>
                                 <!-- End image -->
@@ -1126,7 +1126,7 @@
                         <div class="product-details text-center">
                             <!-- product name -->
                             <div class="product-name">
-                                <a href="product-layout1.html">Toledo Mules shoes</a>
+                                <a href="{{route('product.index')}}">Toledo Mules shoes</a>
                             </div>
                             <!-- End product name -->
                             <!-- product price -->
@@ -1142,7 +1142,7 @@
                         <!-- start product image -->
                         <div class="product-image">
                             <!-- start product image -->
-                            <a href="product-layout1.html" class="product-img">
+                            <a href="{{route('product.index')}}" class="product-img">
                                 <!-- image -->
                                 <img class="primary blur-up lazyload" data-src="home/assets/images/product-images/product2.jpg" src="home/assets/images/product-images/product2.jpg" alt="image"/>
                                 <!-- End image -->
@@ -1158,7 +1158,7 @@
                         <div class="product-details text-center">
                             <!-- product name -->
                             <div class="product-name">
-                                <a href="product-layout1.html">Zipper Jacket</a>
+                                <a href="{{route('product.index')}}">Zipper Jacket</a>
                             </div>
                             <!-- End product name -->
                             <!-- product price -->
@@ -1173,7 +1173,7 @@
                         <!-- start product image -->
                         <div class="product-image">
                             <!-- start product image -->
-                            <a href="product-layout1.html" class="product-img">
+                            <a href="{{route('product.index')}}" class="product-img">
                                 <!-- image -->
                                 <img class="primary blur-up lazyload" data-src="home/assets/images/product-images/product7.jpg" src="home/assets/images/product-images/product7.jpg" alt="image">
                                 <!-- End image -->
@@ -1189,7 +1189,7 @@
                         <div class="product-details text-center">
                             <!-- product name -->
                             <div class="product-name">
-                                <a href="product-layout1.html">Sunset Sleep Scarf Top</a>
+                                <a href="{{route('product.index')}}">Sunset Sleep Scarf Top</a>
                             </div>
                             <!-- End product name -->
                             <!-- product price -->
@@ -1204,7 +1204,7 @@
                     <!-- start product image -->
                     <div class="product-image">
                         <!-- start product image -->
-                        <a href="product-layout1.html" class="product-img">
+                        <a href="{{route('product.index')}}" class="product-img">
                             <!-- image -->
                             <img class="primary blur-up lazyload" data-src="home/assets/images/product-images/product5.jpg" src="home/assets/images/product-images/product5.jpg" alt="image">
                             <!-- End image -->
@@ -1220,7 +1220,7 @@
                     <div class="product-details text-center">
                         <!-- product name -->
                         <div class="product-name">
-                            <a href="product-layout1.html">Toledo Mules shoes</a>
+                            <a href="{{route('product.index')}}">Toledo Mules shoes</a>
                         </div>
                         <!-- End product name -->
                         <!-- product price -->
@@ -1233,9 +1233,9 @@
                 </div>
             </div>
         <!--End Recently Product Slider-->
-        
+
     </div><!--End Body Container-->
-    
+
     <!--Product Navigation-->
     <a href="#" class="product-nav prev-pro" title="Previous Product">
         <span class="details">Sunset Sleep Scarf Top<br>
@@ -1381,4 +1381,3 @@
 </div>
 
 @stop
-                        
