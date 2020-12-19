@@ -1,7 +1,7 @@
 <nav class="sidebar">
   <div class="sidebar-header">
     <a href="#" class="sidebar-brand">
-      Noble<span>UI</span>
+      Sewans<span></span>
     </a>
     <div class="sidebar-toggler not-active">
       <span></span>
@@ -40,13 +40,13 @@
         </div>
       </li> --}}
       <li class="nav-item {{ active_class(['apps/chat']) }}">
-        <a href="{{ url('/apps/chat') }}" class="nav-link">
+        <a href="{{ route('product.index')}}" class="nav-link">
           <i class="link-icon" data-feather="message-square"></i>
           <span class="link-title">商品列表</span>
         </a>
       </li>
       <li class="nav-item {{ active_class(['apps/calendar']) }}">
-        <a href="{{ url('/apps/calendar') }}" class="nav-link">
+        <a href="{{  route('product.create')}}" class="nav-link">
           <i class="link-icon" data-feather="calendar"></i>
           <span class="link-title">新增商品</span>
         </a>

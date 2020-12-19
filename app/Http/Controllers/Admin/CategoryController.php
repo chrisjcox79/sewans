@@ -142,4 +142,10 @@ class CategoryController extends Controller
         $category->delete();
         return response()->json(['code'=>200,'msg'=>'删除成功']);
     }
+    public function categoryapi(Request $request)
+    {
+        $data = Category::where('pid',$request->pid)->get();
+        return response()->json(['code'=>200,'data'=>$data]);
+    }
 }
+
