@@ -104,7 +104,7 @@
                 if (result.isConfirmed) {
                     $.ajax({
                         type: "DELETE",
-                        url: `/admin/type/${id}`,
+                        url: `/admin/types/${id}`,
                         dataType: "JSON",
                         data:{
                             '_token':'{{csrf_token()}}'

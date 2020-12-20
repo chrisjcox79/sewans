@@ -3,12 +3,9 @@
 namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
-use App\Http\Requests\TypeStoreRequest;
-use App\Models\GoodsType;
-use App\Models\Product;
 use Illuminate\Http\Request;
 
-class TypeController extends Controller
+class PriductController extends Controller
 {
     /**
      * Display a listing of the resource.
@@ -18,8 +15,6 @@ class TypeController extends Controller
     public function index()
     {
         //
-        $types = GoodsType::with('attributes')->get();
-        return view('admin.pages.type.index',compact('types'));
     }
 
     /**
@@ -30,8 +25,6 @@ class TypeController extends Controller
     public function create()
     {
         //
-        return view('admin.pages.type.create');
-
     }
 
     /**
@@ -40,13 +33,9 @@ class TypeController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(TypeStoreRequest $typeStoreRequest)
+    public function store(Request $request)
     {
         //
-        $data = $typeStoreRequest->validated();
-        GoodsType::create($data);
-        session()->flash('success','添加成功');
-        return  redirect()->route('types.index');
     }
 
     /**
@@ -66,11 +55,9 @@ class TypeController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function edit(GoodsType $type)
+    public function edit($id)
     {
         //
-
-        return view('admin.pages.type.edit',compact('type'));
     }
 
     /**
@@ -80,13 +67,9 @@ class TypeController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(TypeStoreRequest $typeStoreRequest, $type)
+    public function update(Request $request, $id)
     {
         //
-        $data = $typeStoreRequest->validated();
-        GoodsType::where('id',$type)->update($data);
-        session()->flash('success','修改成功');
-        return  redirect()->route('types.index');
     }
 
     /**
@@ -95,17 +78,8 @@ class TypeController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function destroy(GoodsType $type)
+    public function destroy($id)
     {
         //
-      
-        $total = Product::where('goods_type_id', $type->id)->count();
-    
-        if ($total>0) {
-          
-            return response()->json(['code'=>400,'msg'=>'该模型有商品使用中,无法删除']);
-        }
-        $type->delete();
-        return response()->json(['code'=>200,'msg'=>'删除成功']);
     }
 }

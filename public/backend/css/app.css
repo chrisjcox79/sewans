@@ -31908,4 +31908,12 @@ div.tagsinput span.tag a {
 #product-attr-table input.form-control {
   width: auto!important;
 }
+.delete-item{
+  cursor: pointer;
+  font-size: 20px;
+  transition: all .4s;
+}
+.delete-item:hover{
+  opacity: .7;
+}
 /*# sourceMappingURL=app.css.map*/

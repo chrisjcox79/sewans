@@ -44,4 +44,5 @@ Route::resource('admin/types','Admin\TypeController');
 Route::resource('admin/brand','Admin\BrandController');
 Route::resource('admin/coupons','Admin\CouponController');
 Route::resource('admin/product','Admin\ProductController');
+Route::resource('admin/attribute','Admin\AttributeController');
 //Route::resource('admin/product','Admin\ProductController');

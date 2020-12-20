@@ -76,6 +76,21 @@
         }
         pre_loader();
 
+
+        // var unsaved = false;
+
+        // $(":input").change(function() { //triggers change in all input fields including text type
+        //     unsaved = true;
+        // });
+
+        // function unloadPage() {
+        //     if (unsaved) {
+        //         return "表单未提交或保存,是否确认离开?";
+        //     }
+        // }
+
+        // window.onbeforeunload = unloadPage;
+
     </script>
 
 

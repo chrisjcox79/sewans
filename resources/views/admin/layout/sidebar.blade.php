@@ -108,10 +108,10 @@
         <div class="collapse {{ show_class(['forms/*']) }}" id="forms">
           <ul class="nav sub-menu">
             <li class="nav-item">
-              <a href="{{ url('/forms/basic-elements') }}" class="nav-link {{ active_class(['forms/basic-elements']) }}">规格列表</a>
+              <a href="{{ route('attribute.index') }}" class="nav-link {{ active_class(['forms/basic-elements']) }}">规格列表</a>
             </li>
             <li class="nav-item">
-              <a href="{{ url('/forms/advanced-elements') }}" class="nav-link {{ active_class(['forms/advanced-elements']) }}">新增规格</a>
+              <a href="{{route('attribute.create') }}" class="nav-link {{ active_class(['forms/advanced-elements']) }}">新增规格</a>
             </li>
           </ul>
         </div>

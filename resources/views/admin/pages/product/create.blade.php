@@ -350,7 +350,7 @@
                         <p class="text-right"><button class="btn btn-primary" id="add_attr" type="button">添加属性</button></p>
                         <div class="table-responsive pt-3">
                             <thead>
-                                <table class="table table-bordered">
+                                <table class="table table-bordered text-center">
                                     <tr>
                                         <th>颜色</th>
                                         <th>尺码</th>
@@ -367,11 +367,16 @@
                             </table>
                         </div>
                     </div>
+                    
                 </div>
             </div>
-            <input type="submit" class="btn btn-info" value="add">
+            
         </div>
-
+        <div class="row">
+            <div class="col">
+                <button class="btn btn-success float-right" type="submit">添加</button>
+            </div>
+        </div>
     </form>
 
 
@@ -465,25 +470,25 @@
 
             $("#add_attr").on('click', function() {
                 var index = $("#product-attr-table tr").length;
-                console.log(index);
+              
                 let $html = `
                     
-                    <tr>
+                    <tr >
                             <td scope="row">
                                 <div id="cp-${index}" class="input-group mb-2" title="Using input value">
-                                    <input type="text" class="form-control input-lg" value="#DD0F20FF"/ name='product[${index}][color['>
+                                    <input type="text" class="form-control input-lg" value="#DD0F20FF"/ name='item[${index}][color]'>
                                     <span class="input-group-append">
                                       <span class="input-group-text colorpicker-input-addon"><i></i></span>
                                     </span>
                                   </div>
                             </td>
-                            <td><input type="text" class="form-control" name="product[${index}][size]"></td>
-                            <td><input type="text" class="form-control" name="product[${index}][store]"></td>
-                            <td><input type="text" class="form-control" name="product[${index}][sale]"></td>
-                            <td><input type="text" class="form-control" name="product[${index}][origin]"></td>
-                            <td>  <input type="file" id="product_attr_img-${index}" class="border" name="product[${index}][image][]" data-allowed-file-extensions="gif png jpg jpeg svg" data-max-file-size-preview="5M" data-height="80" data-width="80" />
+                            <td><input type="text" class="form-control" name="item[${index}][size]"></td>
+                            <td><input type="text" class="form-control" name="item[${index}][store]"></td>
+                            <td><input type="text" class="form-control" name="item[${index}][sale]"></td>
+                            <td><input type="text" class="form-control" name="item[${index}][origin]"></td>
+                            <td>  <input type="file" id="product_attr_img-${index}" class="border" name="item[${index}][image][]" data-allowed-file-extensions="gif png jpg jpeg svg" data-max-file-size-preview="5M"  />
     </td>
-                            <td><i class="fa fa-trash fa-lg"></i></td>
+                            <td><i class="fa fa-trash fa-lg delete-item"></i></td>
                         </tr>
                     `;
 
@@ -491,14 +496,17 @@
                 $(`#cp-${index}`).colorpicker();
                 $(`#product_attr_img-${index}`).dropify({
                     messages: {
-                        'default': '上传图片',
-                        'replace': 'Drag and drop or click to replace',
-                        'remove': '删除',
-                        'error': 'Ooops, something wrong happended.',
-                       
-                    }
+                    'default': '上传图片',
+                    'replace': 'Drag and drop or click to replace',
+                    'remove':  '删除',
+                    'error':   'Ooops, something wrong happended.'
+  }
                 });
             });
+
+            $(document).on('click','.delete-item',function(){
+                $(this).closest('tr').remove();
+            })
         });
 
     </script>
