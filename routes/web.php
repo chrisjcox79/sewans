@@ -40,6 +40,7 @@ Route::get('admin', 'AdminController@index')->name('admin.home');
 
 Route::resource('admin/category','Admin\CategoryController');
 Route::get('admin/categoryapi','Admin\CategoryController@categoryapi')->name('category.api');
+Route::get('admin/getAttr','Admin\TypeController@getAttr')->name('type.getAttr');
 Route::resource('admin/types','Admin\TypeController');
 Route::resource('admin/brand','Admin\BrandController');
 Route::resource('admin/coupons','Admin\CouponController');

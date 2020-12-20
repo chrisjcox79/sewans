@@ -8,10 +8,15 @@ class Attribute extends Model
 {
     //
     
-    protected $fillable=['goods_type_id','attribute_value','sort','attribute_color'];
+    protected $fillable=['goods_type_id','attribute_name','sort'];
 
     public function types()
     {
         return $this->belongsTo(GoodsType::class);
+    }
+
+    public function attrValues()
+    {
+        return $this->hasMany(AttributeValue::class);
     }
 }

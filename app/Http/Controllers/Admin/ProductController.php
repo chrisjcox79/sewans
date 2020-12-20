@@ -33,7 +33,7 @@ class ProductController extends Controller
         //
         $category = Category::where('pid', 0)->get();
         $brands = Brands::all();
-        $types = GoodsType::all();
+        $types = GoodsType::where('status',1)->get();
         return view('admin.pages.product.create',compact('category','brands','types'));
 
     }

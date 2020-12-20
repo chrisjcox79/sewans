@@ -329,7 +329,7 @@
                             </div>
                             <div class="col-lg-8">
                                 <div class="form-group">
-                                    <select class="form-control" id="brand" name="brands_id">
+                                    <select class="form-control" id="goods_type_id" name="goods_type_id">
                                         <option selected disabled>请选择商品模型</option>
                                         @foreach ($types as $v)
                                             <option value="{{ $v->id }}">{{ $v->type_name }}</option>
@@ -349,18 +349,35 @@
                         <h4 class="card-title">商品属性:</h4>
                         <p class="text-right"><button class="btn btn-primary" id="add_attr" type="button">添加属性</button></p>
                         <div class="table-responsive pt-3">
-                            <thead>
-                                <table class="table table-bordered text-center">
-                                    <tr>
-                                        <th>颜色</th>
-                                        <th>尺码</th>
-                                        <th>库存</th>
-                                        <th>购买价</th>
-                                        <th>成本价</th>
-                                        <th>商品图片</th>
-                                        <th>操作</th>
-                            </thead>
-                            <tbody id="product-attr-table">
+                            
+                                <table class="table table-bordered text-center"  id="product-attr-table">
+                                   
+                           
+                            <tbody class=" text-center">
+
+
+                            </tbody>
+                            </table>
+                        </div>
+                    </div>
+                    
+                </div>
+            </div>
+            
+        </div>
+
+        <div class="row py-4">
+            <div class="col-md-12 grid-margin stretch-card">
+                <div class="card">
+                    <div class="card-body">
+                        <h4 class="card-title">商品属性:</h4>
+                        <p class="text-right"><button class="btn btn-primary" id="add_attr" type="button">添加属性</button></p>
+                        <div class="table-responsive pt-3">
+                            
+                                <table class="table table-bordered text-center table-responsive"  id="spec_input_table">
+                                   
+                           
+                            <tbody class=" text-center">
 
 
                             </tbody>
@@ -508,6 +525,183 @@
                 $(this).closest('tr').remove();
             })
         });
+
+        $("#goods_type_id").on('change',function(){
+            type_id = $(this).val();
+            $.ajax({
+                    type: "get",
+                    url: "{{ route('type.getAttr') }}",
+                    data: {
+                        'type_id': type_id,
+                        "_token": '{{ csrf_token() }}'
+                    },
+                    dataType: "JSON",
+                    'success': function(response) {
+                        if (response.code != 200) {
+                            alert(response.msg);
+                            return;
+                        }
+                        //根据获取的数据，拼接html代码，显示到页面
+                        // var attrs = response.data.attrs;
+                        var specs = response.data.attrs;
+                        //遍历数组，一条一条数据拼接处理
+                        var spec_html = '<tr><td colspan="2" class=" text-left">商品规格</td></tr>';
+                        $.each(specs, function(i, v) {
+                            //i 是数组中的索引，v是一条数据（json格式对象）
+                            //属性名称
+                            spec_html += '<tr class="spec_name text-center" spec_id="' +
+                                v.id +
+                                '">';
+                            spec_html += '<td spec_name="' + v.attribute_name + 
+                                '" >' + v
+                                .attribute_name + '：</td>';
+                            spec_html += '<td>';
+                            $.each(v.attr_values, function(index, value) {
+                                spec_html +=
+                                    '<button type="button" spec_value_id="' +
+                                    value.id +
+                                    '" class="btn btn-primary">' +
+                                    value
+                                    .attribute_value + '</button> ';
+                            });
+                            spec_html += '</td>';
+                            spec_html += '</tr>';
+                        });
+                        //将拼接好的html字符串，放到页面显示
+                        $('#product-attr-table').find('tbody').html(spec_html);
+
+                
+                          
+            $('#product-attr-table').on('click', 'button', function() {       
+                $(this).toggleClass('btn-primary').toggleClass('btn-light');
+                var spec_data = {};
+                $('.spec_name').find('button.btn-light').each(function(i, v) {
+                    var index = $(v).closest('tr').index();
+                    var spec_id = $(v).closest('tr').attr('spec_id');
+                    var spec_name = $(v).closest('tr').find('td:first').attr(
+                        'spec_name');
+                    var spec_value_id = $(v).attr('spec_value_id');
+                    var spec_value = $(v).text();
+                    if (spec_data[index] == undefined) spec_data[index] = [];
+                    spec_data[index].push({
+                        spec_id: spec_id,
+                        spec_name: spec_name,
+                        spec_value_id: spec_value_id,
+                        spec_value: spec_value
+                    });
+                });
+                var spec_arr = [];
+                for (var i in spec_data) {
+                    spec_arr.push(spec_data[i]);
+                }
+                //计算笛卡尔积
+                var result = spec_arr[0];
+                for (var i = 1; i < spec_arr.length; i++) {
+                    var temp = [];
+                    $.each(result, function(j, v1) {
+                        $.each(spec_arr[i], function(k, v2) {
+                            if ($.isArray(v1)) {
+                                v1.push(v2);
+                                temp.push(v1);
+                            } else {
+                                temp.push([v1, v2])
+                            }
+
+                        });
+                    });
+                    result = temp;
+                }
+                var html = ``;
+                //拼接第一行
+                html += '<tr>';
+                if ($.isArray(result[0]) == false) {
+                    html += '<td style="text-align: center; font-size: 14px;"><b>' +
+                        result[0].spec_name + '</b></td>';
+                } else {
+                    $.each(result[0], function(i, v) {
+                        html +=
+                            '<td style="text-align: center; font-size: 14px; "><b>' +
+                            v.spec_name + '</b></td>';
+                    });
+                }
+                html += '<td><b>购买价</b></td>';
+                html += '<td><b>成本价</b></td>';
+                html += '<td><b>库存</b></td>';
+                html += '<td><b>图片</b></td>';
+                html +=
+                    '<td style="text-align: center; font-size: 14px;"><b>操作</b></td>';
+                html += '</tr>';
+                //拼接批量填充行
+                html += '<tr >';
+                if ($.isArray(result[0]) == false) {
+                    html += '<td><b></b></td>';
+                } else {
+                    $.each(result[0], function(i, v) {
+                        html += '<td><b></b></td>';
+                    });
+                }
+                html += '<td><input id="item_price" value="0" class="form-control"></td>';
+                html += '<td><input id="item_cost_price" value="0" class="form-control"></td>';
+                html += '<td><input id="item_store_count" value="0" class="form-control"></td>';
+                html += '<td></td>';
+                html +=
+                    '<td style="text-align:center;"><button id="item_fill" type="button" class="btn-primary btn" >批量填充</button></td>';
+                html += '</tr>';
+                //继续拼接
+                $.each(result, function(i, v) {
+                    html += '<tr style="text-align: center; "  class="spec_table">';
+                    if ($.isArray(v) == false) {
+                        var value_ids = v.spec_value_id;
+                        var value_names = v.spec_name + ':' + v.spec_value;
+                        html += '<td>' + v.spec_value + '</td>';
+                    } else {
+                        var value_ids = '';
+                        var value_names = '';
+                        $.each(v, function(i2, v2) {
+                            html += '<td>' + v2.spec_value + '</td>';
+                            value_ids += v2.spec_value_id + '_';
+                            value_names += v2.spec_name + ':' + v2.spec_value +
+                                ' ';
+                        });
+                        value_ids = value_ids.slice(0, -1);
+                        value_names = value_names.slice(0, -1);
+                    }
+                    html += '<td ><input class="item_price form-control" name="item[' +
+                        value_ids +
+                        '][price]" value="0"><input type="hidden" name="item[' +
+                        value_ids +
+                        '][value_names]" value="' + value_names +
+                        '"><input type="hidden" name="item[' + value_ids +
+                        '][value_ids]" value="' + value_ids + '"></td>';
+                    html +=
+                        '<td><input class="item_cost_price form-control" name="item[' +
+                        value_ids +
+                        '][cost_price]" value="0"></td>';
+                    html +=
+                        '<td><input class="item_store_count form-control" name="item[' +
+                        value_ids +
+                        '][store_count]" value="0"></td>';
+                        html +=
+                        '<td><input class="item_store_count form-control" name="item[' +
+                        value_ids +
+                        '][file][]" value="0" type="file"></td>';
+                    html +=
+                        '<td><i class="layui-icon layui-icon-delete" style="font-size: 30px; cursor:pointer"></i></td>';
+                        
+                    html += '</tr>';
+                });
+                $('#spec_input_table').find('tbody').html(html);
+
+               
+            });
+
+                    }
+                });
+
+        });
+
+
+
 
     </script>
 @endpush

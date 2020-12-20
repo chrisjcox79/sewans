@@ -39,7 +39,7 @@
                                             {{ $v->id }}
                                         </td>
                                         <td>
-                                            {{ $v->attribute_value }}
+                                            {{ $v->attribute_name }}
                                         </td>
                                     
                                         <td>

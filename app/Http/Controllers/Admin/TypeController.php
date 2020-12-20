@@ -108,4 +108,21 @@ class TypeController extends Controller
         $type->delete();
         return response()->json(['code'=>200,'msg'=>'删除成功']);
     }
+
+
+    public function getAttr(Request $request)
+    {
+
+
+        $type = GoodsType::with(['attributes','attributes.attrValues'])->where('id',$request->type_id)->get()->toArray();
+        foreach($type as $k =>$v){
+            $data['attrs'] = $v['attributes'];
+         
+        }
+
+
+        return response()->json(['code'=>200,'data'=>$data]);
+
+
+    }
 }
