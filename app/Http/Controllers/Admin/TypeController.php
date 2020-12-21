@@ -98,7 +98,7 @@ class TypeController extends Controller
     public function destroy(GoodsType $type)
     {
         //
-      
+
         $total = Product::where('goods_type_id', $type->id)->count();
     
         if ($total>0) {

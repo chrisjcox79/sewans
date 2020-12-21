@@ -8,7 +8,8 @@
     <meta name="viewport" content="width=device-width, initial-scale=1">
 
     <!-- CSRF Token -->
-    <meta name="_token" content="{{ csrf_token() }}">
+    <meta name="csrf-token" content="{{ csrf_token() }}">
+
 
     <link rel="shortcut icon" href="{{ asset('backend/favicon.ico') }}">
 
@@ -65,9 +66,35 @@
                 $('input[type=submit]').attr('disabled', true);
 
             });
+            $.ajaxSetup({
+                headers: {
+                    'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+                }
+            });
 
+
+
+            function alertMessage(response) {
+                if (response.code != 200) {
+                    Swal.fire(
+
+                        response.msg,
+                        '',
+                        'error'
+                    )
+                    return;
+                }
+                Swal.fire(
+
+                    response.msg,
+                    '',
+                    'success'
+                )
+            }
 
         });
+
+
 
 
         function pre_loader() {

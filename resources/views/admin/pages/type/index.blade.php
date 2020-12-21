@@ -63,7 +63,7 @@
 
                                             </a>
                                           
-                                                <button type="submit" class="btn btn-danger btn-icon-text delete-type"  data-id="{{ $v->id }}"
+                                                <button type="submit" class="btn btn-danger btn-icon-text delete-type"  data-url="{{route('types.destroy',$v)}}"
                                                     data-name="{{ $v->type_name }}">
                                                     <i class="btn-icon-prepend" data-feather="trash"></i>
                                                     删除
@@ -104,11 +104,8 @@
                 if (result.isConfirmed) {
                     $.ajax({
                         type: "DELETE",
-                        url: `/admin/types/${id}`,
+                        url: $(this).data('url'),
                         dataType: "JSON",
-                        data:{
-                            '_token':'{{csrf_token()}}'
-                        },
                         success: function(response) {
                             if (response.code != 200) {
                                 Swal.fire(
