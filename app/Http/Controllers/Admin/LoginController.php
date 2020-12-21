@@ -50,8 +50,9 @@ class LoginController extends Controller
     }
 
     // 退出后跳转页面
-    protected function loggedOut(Request $request)
+    protected function logout(Request $request)
     {
-        return redirect(route('admin.pages.auth.login'));
+        Auth::logout();
+        return redirect(route('admin.login'));
     }
 }

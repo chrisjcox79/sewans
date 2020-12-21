@@ -21,10 +21,9 @@
         <div class="col-md-12 grid-margin stretch-card">
             <div class="card">
 
-
                 <div class="card-body">
                     <h6 class="card-title">添加属性</h6>
-                    <form action="{{ route('attribute.store') }}" method="POST">
+                    <form action="{{ route('attribute.store') }}" method="POST" id="attr-form">
                         @csrf
                         <div class="form-group">
                             <label>商品属性</label>
@@ -37,66 +36,86 @@
 
                             </select>
                         </div>
-                        <div class="table-responsive pt-3">
-                            <table class="table table-light attr-table ">
-                                <tbody class="">
-                                    <tr class="">
-                                        <td>
-                                            <div class="form-group mb-1">
-                                                <label for="name">规格名称</label>
-                                                <input id="attribute_value" class="form-control w-100 input-lg"
-                                                    name="attr[0][name]" type="text" placeholder="如:尺寸,颜色"
-                                                    value="{{ old('attribute_value') }}">
-                                            </div>
-                                        </td>
-                                        <td>
-                                            <div class="form-group">
-                                                <label for="name">规格值</label>
-                                                <label for="name" class="float-right add_attr"><span
-                                                        class="badge badge-secondary ">继续添加</span>
-                                                </label>
-                                                <div class="d-flex align-items-center">
-                                                <input id="attribute_value" class="form-control mb-1 w-100" name="attr[0][value][]"
-                                                    type="text" placeholder="如:蓝色" value="{{ old('attribute_value') }}">
-                                                <i class="fa fa-trash fa-lg delete-item ml-3"></i>
+                       <div class="" id="item-row-table">
+
+
+                        <div class="row item-row-table" >
+                            <div class="col item-row">
+                                <div class="row">
+                                    <div class="col text-right">
+                                        <button type="button" class="btn btn-secondary add-attr-row-item">添加规格值</button>
+                                        <button type="button" class="btn  btn-outline-secondary del-attr-row-item">删除</button>
+                                    </div>
+                                </div>
+                                <div class="row attr-table">
+
+                                    <div class="col-md-4">
+                                        <div class="form-group">
+                                            <label for="name">规格名称</label>
+                                            <input id="attribute_value" class="form-control " name="attr[0][name]"
+                                                type="text" placeholder="如:尺寸,颜色" value="{{ old('attribute_value') }}">
+                                        </div>
+
+                                    </div>
+                                    <div class="col-md-8 attr-row">
+                                        <div class="row attr-row-item">
+                                            <div class="col-6">
+                                                <div class="form-group">
+                                                    <label for="name">规格值</label>
+
+                                                    <div class="">
+                                                        <input id="attribute_value" class="form-control "
+                                                            name="attr[0][value][]" type="text" placeholder="如:蓝色"
+                                                            value="{{ old('attribute_value') }}">
+
                                                     </div>
 
-                                            </div>
-                                        </td>
-                                        <td>
-                                            <div class="form-group">
-                                                <label>颜色值</label>
-                                                <label for="name" class="float-right add_attr"><span
-                                                        class="badge badge-secondary ">继续添加</span></label>
-                                                    <div class="color-row">
-                                                      <div class="d-flex align-items-center">
-                                                    <input type="color" class="form-control input-lg w-100 mb-1" 
-                                                        name="attr[0][color][]" />
-                                                        <i class="fa fa-trash fa-lg delete-item ml-3"></i>
-                                                    </div>
-
-                                                
                                                 </div>
-                                                
                                             </div>
-                                            </div>
-                                        </td>
-                                    </tr>
-                        </tbody>
-                        </table>
-                </div>
+                                            <div class="col-6">
 
-                <div class="row py-3">
-                    <div class="col">
-                        <button class="btn btn-primary add_attr_row" type="button">继续添加规格</button>
-                        <button class="btn btn-primary add_attr_row_del" type="button">删除</button>
-                        <input class="btn btn-info float-right" type="submit" value="提交">
-                    </div>
+                                                <div class="form-group">
+                                                    <label>颜色值</label>
+
+                                                    <div class="color-row">
+                                                        <div class="d-flex align-items-center">
+                                                            <input type="color" class="form-control"
+                                                                name="attr[0][color][]" />
+                                                            {{-- <i
+                                                                class="fa fa-trash fa-lg delete-item ml-3"></i>
+                                                            --}}
+                                                        </div>
+                                                    </div>
+
+                                                </div>
+                                            </div>
+                                        </div>
+                                        
+                                        
+
+                                    </div>
+                                </div>
+                            </div>
+                            
+                        </div>
+                       </div>
+                        
+                        
+                        
+
+                   
+
+                        <div class="row py-3">
+                            <div class="col">
+                                <button class="btn btn-primary add_attr_row" type="button">继续添加规格</button>
+                                <button class="btn btn-primary add_attr_row_del" type="button">删除</button>
+                                <input class="btn btn-info float-right" type="submit" value="提交">
+                            </div>
+                        </div>
+                    </form>
                 </div>
-                </form>
             </div>
         </div>
-    </div>
     </div>
 
 
@@ -124,56 +143,72 @@
             $('#attr-col').colorpicker();
             //append table row
             $(".add_attr_row").on('click', function() {
-                var index = $(".attr-table").find('tbody tr').length;
+                var index = $(".item-row-table").length;
+                console.log(index);
+               //  $(".add_attr_row_del").attr('disabled', false);
+                // $html = $(".attr-table").find('tbody tr:first-child').clone(true);
 
-                $(".add_attr_row_del").attr('disabled', false);
-                $html = $(".attr-table").find('tbody tr:first-child').clone(true);
+                $("#item-row-table").append(`
+                                            
+                <div class="row item-row-table" >
+                            <div class="col item-row">
+                                <div class="row">
+                                    <div class="col text-right">
+                                        <button type="button" class="btn btn-secondary add-attr-row-item">添加规格值</button>
+                                        <button type="button" class="btn  btn-outline-secondary del-attr-row-item">删除</button>
 
-                $(".attr-table").find('tbody').append(`
-                        
-                        <tr class="">
-                                                <td>
-                                                    <div class="form-group mb-1">
-                                                        <label for="name">规格名称</label>
-                                                        <input id="attribute_value" class="form-control w-100 input-lg"
-                                                            name="attr[${index}][name]" type="text" placeholder="如:尺寸,颜色"
+                                    </div>
+                                </div>
+                                <div class="row attr-table">
+
+                                    <div class="col-md-4">
+                                        <div class="form-group">
+                                            <label for="name">规格名称</label>
+                                            <input id="attribute_value" class="form-control " name="attr[${index}][name]"
+                                                type="text" placeholder="如:尺寸,颜色" value="{{ old('attribute_value') }}">
+                                        </div>
+
+                                    </div>
+                                    <div class="col-md-8 attr-row">
+                                        <div class="row attr-row-item">
+                                            <div class="col-6">
+                                                <div class="form-group">
+                                                    <label for="name">规格值</label>
+
+                                                    <div class="">
+                                                        <input id="attribute_value" class="form-control "
+                                                            name="attr[${index}][value][]" type="text" placeholder="如:蓝色"
                                                             value="{{ old('attribute_value') }}">
+
                                                     </div>
-                                                </td>
-                                                <td>
-                                                    <div class="form-group">
-                                                        <label for="name">规格值</label>
-                                                        <label for="name" class="float-right add_attr"><span
-                                                                class="badge badge-secondary ">继续添加</span>
-                                                        </label>
+
+                                                </div>
+                                            </div>
+                                            <div class="col-6">
+
+                                                <div class="form-group">
+                                                    <label>颜色值</label>
+
+                                                    <div class="color-row">
                                                         <div class="d-flex align-items-center">
-                                                        <input id="attribute_value" class="form-control mb-1" name="attr[${index}][value][]"
-                                                            type="text" placeholder="如:蓝色" value="{{ old('attribute_value') }}">
-                                                        <i class="fa fa-trash fa-lg delete-item ml-3"></i>
-                                                            </div>
-
-                                                    </div>
-                                                </td>
-                                                <td>
-                                                    <div class="form-group">
-                                                        <label>颜色值</label>
-                                                        <label for="name" class="float-right add_attr"><span
-                                                                class="badge badge-secondary ">继续添加</span></label>
-                                                            <div class="color-row">
-                                                              <div class="d-flex align-items-center">
-                                                            <input type="color" class="form-control input-lg mb-1" 
+                                                            <input type="color" class="form-control"
                                                                 name="attr[${index}][color][]" />
-                                                                <i class="fa fa-trash fa-lg delete-item ml-3"></i>
-                                                            </div>
-
-                                                        
+                                                            {{-- <i
+                                                                class="fa fa-trash fa-lg delete-item ml-3"></i>
+                                                            --}}
                                                         </div>
-                                                        
                                                     </div>
-                                                    </div>
-                                                </td>
-                                            </tr>
-                        `);
+
+                                                </div>
+                                            </div>
+                                        </div>
+
+                                    </div>
+                                </div>
+                            </div>
+                            
+                        </div>
+                                            `);
             });
             //remove row
             $(".add_attr_row_del").on('click', function() {
@@ -189,12 +224,37 @@
 
 
             //
-            $(document).on('click', ".add_attr", function() {
-                
-                var $input = $(this).next().clone(true);
-                $input.find(':text').val('');
-                $input.val('');
-                $(this).after($input);
+            $(document).on('click', ".add-attr-row-item", function() {
+            
+                var $input = $(this).closest('.item-row').find('.attr-table').children('.attr-row').children('.attr-row-item').clone(true);
+                $(this).closest('.item-row').find('.attr-table').children('.attr-row').append($input);
+              // console.log($input);
+                // $input.find(':text').val('');
+                // $input.val('');
+                // $(this).after($input);
+
+            });
+            $(document).on('click', ".del-attr-row-item", function() {
+            
+           // var $input = $(this).closest('.item-row').find('.attr-table').children('.attr-row').children('.attr-row-item').clone(true);
+            $(this).closest('.item-row').find('.attr-table').children('.attr-row').children('.attr-row-item:last-child').remove();
+          // console.log($input);
+            // $input.find(':text').val('');
+            // $input.val('');
+            // $(this).after($input);
+
+        })
+
+
+
+            $(document).on('click', ".del-attr-row", function() {
+
+                var $input = $(".attr-row-item:first-child").clone(true);
+                $(".attr-row").append($input);
+                console.log($input);
+                // $input.find(':text').val('');
+                // $input.val('');
+                // $(this).after($input);
 
             })
 
@@ -203,14 +263,14 @@
 
                 if ($(".attr-table").find('tbody tr').length < 2) {
                     $(this).addClass('d-none');
-                  
+
                 } else {
                     $(this).removeClass('d-none');
                 }
                 $(this).parent().remove();
             })
-            
-           
+
+
         });
 
     </script>

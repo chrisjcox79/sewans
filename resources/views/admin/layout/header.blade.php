@@ -223,10 +223,13 @@
                 </a>
               </li>
               <li class="nav-item">
-                <a href="javascript:;" class="nav-link">
+                <form action="{{route('admin.logout')}}" method="post">
+                  @csrf
+                <button type="submit " class="nav-link btv">
                   <i data-feather="log-out"></i>
                   <span>Log Out</span>
-                </a>
+                </button>
+              </form>
               </li>
             </ul>
           </div>
