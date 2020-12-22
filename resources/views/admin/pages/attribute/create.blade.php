@@ -26,20 +26,13 @@
                     <form action="{{ route('attribute.store') }}" method="POST" id="attr-form">
                         @csrf
                         <div class="form-group">
-                            <label>商品属性</label>
-                            <select class="form-control mb-3" name="goods_type_id" id="goods_types_id">
-                                <option selected value="0">请选择商品模型</option>
-                                @foreach ($types as $item)
-                                    <option value="{{ $item->id }}">{{ $item->type_name }}</option>
-                                @endforeach
-
-
-                            </select>
+                            <label>商品模型属性</label>
+                            <input type="text" class="form-control" name="type_name" value="{{old('type_name')}}">
                         </div>
                        <div class="" id="item-row-table">
 
 
-                        <div class="row item-row-table" >
+                        <div class="row item-row-table py-2 " >
                             <div class="col item-row">
                                 <div class="row">
                                     <div class="col text-right">
@@ -53,7 +46,7 @@
                                         <div class="form-group">
                                             <label for="name">规格名称</label>
                                             <input id="attribute_value" class="form-control " name="attr[0][name]"
-                                                type="text" placeholder="如:尺寸,颜色" value="{{ old('attribute_value') }}">
+                                                type="text" placeholder="如:尺寸,颜色" value="{{ old('attr.0.name') }}">
                                         </div>
 
                                     </div>
@@ -66,7 +59,7 @@
                                                     <div class="">
                                                         <input id="attribute_value" class="form-control "
                                                             name="attr[0][value][]" type="text" placeholder="如:蓝色"
-                                                            value="{{ old('attribute_value') }}">
+                                                            value="{{ old('attr.0.value.0') }}">
 
                                                     </div>
 
@@ -79,8 +72,8 @@
 
                                                     <div class="color-row">
                                                         <div class="d-flex align-items-center">
-                                                            <input type="color" class="form-control"
-                                                                name="attr[0][color][]" />
+                                                            <input type="color" class="form-control" value="{{old('attr.0.color.0')}}"
+                                                                name="attr[0][color][]"  />
                                                             {{-- <i
                                                                 class="fa fa-trash fa-lg delete-item ml-3"></i>
                                                             --}}
@@ -90,20 +83,15 @@
                                                 </div>
                                             </div>
                                         </div>
-                                        
-                                        
+
+
 
                                     </div>
                                 </div>
                             </div>
-                            
+
                         </div>
                        </div>
-                        
-                        
-                        
-
-                   
 
                         <div class="row py-3">
                             <div class="col">
@@ -129,28 +117,16 @@
 @push('custom-scripts')
     <script>
         $(function() {
-            $('#goods_types_id').change(function() {
-                var $unit = $(this).children("option:selected").text();
-                if ($unit === '颜色' || $unit === 'color' || $unit === 'Color') {
-                    $("#attribute-color-row").removeClass('d-none');
-                } else {
-                    $("#attribute-color-row").addClass('d-none');
-                }
-            });
             $(`#attribute-color`).colorpicker({
                 format: 'hex'
             });
-            $('#attr-col').colorpicker();
+
             //append table row
             $(".add_attr_row").on('click', function() {
                 var index = $(".item-row-table").length;
-                console.log(index);
-               //  $(".add_attr_row_del").attr('disabled', false);
-                // $html = $(".attr-table").find('tbody tr:first-child').clone(true);
-
                 $("#item-row-table").append(`
-                                            
-                <div class="row item-row-table" >
+
+                <div class="row item-row-table py-2" >
                             <div class="col item-row">
                                 <div class="row">
                                     <div class="col text-right">
@@ -165,7 +141,7 @@
                                         <div class="form-group">
                                             <label for="name">规格名称</label>
                                             <input id="attribute_value" class="form-control " name="attr[${index}][name]"
-                                                type="text" placeholder="如:尺寸,颜色" value="{{ old('attribute_value') }}">
+                                                type="text" placeholder="如:尺寸,颜色" value="{{ old('attr[${index}][name]') }}">
                                         </div>
 
                                     </div>
@@ -178,7 +154,7 @@
                                                     <div class="">
                                                         <input id="attribute_value" class="form-control "
                                                             name="attr[${index}][value][]" type="text" placeholder="如:蓝色"
-                                                            value="{{ old('attribute_value') }}">
+                                                            value="{{ old('attr[${index}][value][]') }}">
 
                                                     </div>
 
@@ -206,38 +182,42 @@
                                     </div>
                                 </div>
                             </div>
-                            
+
                         </div>
                                             `);
             });
             //remove row
             $(".add_attr_row_del").on('click', function() {
-                if ($(".attr-table").find('tbody tr').length < 2) {
-                    $(this).attr('disabled', true);
+                if ($(".item-row-table").length < 2) {
+
                     return;
                 } else {
-                    $(this).attr('disabled', false);
+                    $(".item-row-table:last-child").remove();
+
                 }
-                $(".attr-table").find('tbody tr:last-child').remove();
 
             });
 
 
             //
             $(document).on('click', ".add-attr-row-item", function() {
-            
-                var $input = $(this).closest('.item-row').find('.attr-table').children('.attr-row').children('.attr-row-item').clone(true);
+
+                var $input = $(this).closest('.item-row').find('.attr-table').children('.attr-row').children('.attr-row-item:first-child').clone(true);
+                $input.find(':text').val('');
+                $input.val('');
                 $(this).closest('.item-row').find('.attr-table').children('.attr-row').append($input);
               // console.log($input);
-                // $input.find(':text').val('');
-                // $input.val('');
+
                 // $(this).after($input);
 
             });
             $(document).on('click', ".del-attr-row-item", function() {
-            
+
            // var $input = $(this).closest('.item-row').find('.attr-table').children('.attr-row').children('.attr-row-item').clone(true);
-            $(this).closest('.item-row').find('.attr-table').children('.attr-row').children('.attr-row-item:last-child').remove();
+                if($(this).closest('.item-row').find('.attr-table').children('.attr-row').children('.attr-row-item').length<2){
+                    return;
+                }
+             $(this).closest('.item-row').find('.attr-table').children('.attr-row').children('.attr-row-item:last-child').remove();
           // console.log($input);
             // $input.find(':text').val('');
             // $input.val('');

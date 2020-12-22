@@ -34,6 +34,7 @@ class TypeStoreRequest extends FormRequest
         return [
             'type_name.required'=>'模型名称不能为空',
             'type_name.unique'=>'模型名称已存在',
+            'type_name.required'=>'规格名称不能为空',
         ];
     }
 }

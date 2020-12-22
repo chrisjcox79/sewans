@@ -53,10 +53,10 @@ class AttributeController extends Controller
 
 
         $data = $request->validated();
-
+    
         DB::beginTransaction();
         try {
-
+            $type = GoodsType::create($data);
 
             foreach ($data['attr'] as $i => $attr) {
                 if (trim($attr['name'] == '')) {
@@ -75,33 +75,33 @@ class AttributeController extends Controller
                     unset($data['attr'][$i]);
                 }
             }
-           
+
 
             // 批量添加新的规格值
             // 批量添加新的规格名
             foreach ($data['attr'] as $i => $attr) {
                 $row = [
                     'attribute_name' => $attr['name'],
-                    'goods_type_id' => $data['goods_type_id']
+                    'goods_type_id' => $type->id
                 ];
                 $attrData[] =  Attribute::create($row);
             }
-          
+
             // 批量添加新的规格值
             foreach ($data['attr'] as $i => $attr) {
                 foreach ($attr['value'] as $k=>$value) {
                     $row = [
-                        'goods_type_id' =>$data['goods_type_id'],
+                        'goods_type_id' =>$type->id,
                         'attribute_id' => $attrData[$i]['id'],
                         'attribute_color_value' => $attr['color'][$k],
                         'attribute_value' => str_replace(' ', '', strtoupper($value))
                     ];
                          AttributeValue::create($row);
-                       
+
                 }
             }
-         
-      
+
+
             // 去除空的属性值
 
             DB::commit();
