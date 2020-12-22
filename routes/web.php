@@ -46,4 +46,6 @@ Route::resource('admin/brand','Admin\BrandController');
 Route::resource('admin/coupons','Admin\CouponController');
 Route::resource('admin/product','Admin\ProductController');
 Route::resource('admin/attribute','Admin\AttributeController');
+Route::resource('admin/users','Admin\UserController');
+
 //Route::resource('admin/product','Admin\ProductController');

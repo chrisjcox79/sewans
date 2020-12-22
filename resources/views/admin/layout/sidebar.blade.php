@@ -78,7 +78,7 @@
             <li class="nav-item">
               <a href="{{route('category.create') }}" class="nav-link {{ active_class(['ui-components/badges']) }}">新增分类</a>
             </li>
-           
+
           </ul>
         </div>
       </li>
@@ -130,7 +130,7 @@
             <li class="nav-item">
               <a href="{{ route('types.create') }}" class="nav-link {{ active_class(['charts/chartjs']) }}">新增模型</a>
             </li>
-          
+
           </ul>
         </div>
       </li>
@@ -149,7 +149,7 @@
       </li>
       <li class="nav-item nav-category">会员管理</li>
       <li class="nav-item {{ active_class(['apps/calendar']) }}">
-        <a href="{{ url('/apps/calendar') }}" class="nav-link">
+        <a href="{{ route('users.index') }}" class="nav-link">
           <i class="link-icon" data-feather="calendar"></i>
           <span class="link-title">会员列表</span>
         </a>

@@ -8667,7 +8667,6 @@
          *
          * @param array $proxies A list of trusted proxies, the string 'REMOTE_ADDR' will be replaced with $_SERVER['REMOTE_ADDR']
          * @param int $trustedHeaderSet A bit field of Request::HEADER_*, to set which headers to trust from your proxies
-         * @throws \InvalidArgumentException When $trustedHeaderSet is invalid
          * @static 
          */ 
         public static function setTrustedProxies($proxies, $trustedHeaderSet)
@@ -9337,7 +9336,6 @@
          *
          * @param bool $asResource If true, a resource will be returned
          * @return string|resource The request body content or a resource to read the body stream
-         * @throws \LogicException
          * @static 
          */ 
         public static function getContent($asResource = false)
@@ -10292,6 +10290,19 @@
         public static function hasMacro($name)
         {
                         return \Illuminate\Routing\ResponseFactory::hasMacro($name);
+        }
+                    /**
+         * 
+         *
+         * @see \App\Providers\ResponseMacroServiceProvider::boot()
+         * @param mixed $msg
+         * @param mixed $code
+         * @param mixed $data
+         * @static 
+         */ 
+        public static function api($msg = '', $code = 200, $data = '')
+        {
+                        return \Illuminate\Routing\ResponseFactory::api($msg, $code, $data);
         }
          
     }
@@ -14534,6 +14545,26 @@
         public static function emailVerification()
         {
                         return \Illuminate\Routing\Router::emailVerification();
+        }
+         
+    }
+            /**
+     * 
+     *
+     */ 
+        class ResponseFactory {
+                    /**
+         * 
+         *
+         * @see \App\Providers\ResponseMacroServiceProvider::boot()
+         * @param mixed $msg
+         * @param mixed $code
+         * @param mixed $data
+         * @static 
+         */ 
+        public static function api($msg = '', $code = 200, $data = '')
+        {
+                        return \Illuminate\Routing\ResponseFactory::api($msg, $code, $data);
         }
          
     }
