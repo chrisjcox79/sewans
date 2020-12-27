@@ -27,9 +27,13 @@ class AppServiceProvider extends ServiceProvider
     public function boot()
     {
         //
+        if (App::environment('production')) {
+            Url::forceScheme('https');
+        }
         Schema::defaultStringLength(191);
         // $this->app['request']->server->set('HTTPS',true);
        Category::observe(CategoryObserver::class);
+
     }
 
 }
