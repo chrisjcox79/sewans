@@ -6,6 +6,7 @@ use App\Observers\CategoryObserver;
 use App\Models\Category;
 use Illuminate\Support\ServiceProvider;
 use Illuminate\Support\Facades\Schema;
+use Illuminate\Support\Facades\URL;
 
 class AppServiceProvider extends ServiceProvider
 {
@@ -27,8 +28,8 @@ class AppServiceProvider extends ServiceProvider
     public function boot()
     {
         //
-        if (App::environment('production')) {
-            Url::forceScheme('https');
+        if (app()->environment('production')) {
+            \URL::forceScheme('https');
         }
         Schema::defaultStringLength(191);
         // $this->app['request']->server->set('HTTPS',true);
