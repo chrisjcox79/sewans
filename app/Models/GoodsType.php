@@ -10,7 +10,7 @@ class GoodsType extends Model
     protected $fillable = ['type_name','status'];
     public function attributes()
     {
-        return $this->hasMany(Attribute::class);
+        return $this->hasMany(Attribute::class,'goods_type_id','id');
     }
 
 }

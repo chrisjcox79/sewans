@@ -52,7 +52,7 @@ class LoginController extends Controller
     // 退出后跳转页面
     protected function logout(Request $request)
     {
-        Auth::logout();
+        auth('admin')->logout();
         return redirect(route('admin.login'));
     }
 }

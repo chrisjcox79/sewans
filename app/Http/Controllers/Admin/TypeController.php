@@ -2,13 +2,16 @@
 
 namespace App\Http\Controllers\Admin;
 
+use App\Http\Controllers\AdminController;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\TypeStoreRequest;
+use App\Models\Attribute;
+use App\Models\AttributeValue;
 use App\Models\GoodsType;
 use App\Models\Product;
 use Illuminate\Http\Request;
-
-class TypeController extends Controller
+use Illuminate\Support\Facades\DB;
+class TypeController extends AdminController
 {
     /**
      * Display a listing of the resource.
@@ -19,6 +22,7 @@ class TypeController extends Controller
     {
         //
         $types = GoodsType::with('attributes')->get();
+
         return view('admin.pages.type.index',compact('types'));
     }
 
@@ -40,13 +44,69 @@ class TypeController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(TypeStoreRequest $typeStoreRequest)
+    public function store(TypeStoreRequest $request)
     {
         //
-        $data = $typeStoreRequest->validated();
-        GoodsType::create($data);
-        session()->flash('success','添加成功');
-        return  redirect()->route('types.index');
+
+        $data = $request->validated();
+
+        DB::beginTransaction();
+        try {
+            $type = GoodsType::create($data);
+
+            foreach ($data['attr'] as $i => $attr) {
+                if (trim($attr['name'] == '')) {
+                    unset($attr['attr'][$i]);
+                    continue;
+                }
+                foreach ($attr['value'] as $k => $value) {
+                    if (trim($value == '')) {
+                        unset($data['attr'][$i]['value'][$k]);
+                    }
+                    // $arr = explode(',',$value);
+                    // unset( $data['spec'][$i]['value']);
+                    // $data['spec'][$i]['value'] = $arr;
+                }
+                if (empty($data['attr'][$i]['value'])) {
+                    unset($data['attr'][$i]);
+                }
+            }
+
+
+            // 批量添加新的规格值
+            // 批量添加新的规格名
+            foreach ($data['attr'] as $i => $attr) {
+                $row = [
+                    'attribute_name' => $attr['name'],
+                    'goods_type_id' => $type->id
+                ];
+                $attrData[] =  Attribute::create($row);
+            }
+
+            // 批量添加新的规格值
+            foreach ($data['attr'] as $i => $attr) {
+                foreach ($attr['value'] as $k=>$value) {
+                    $row = [
+                        'goods_type_id' =>$type->id,
+                        'attribute_id' => $attrData[$i]['id'],
+                        'attribute_color_value' => $attr['color'][$k],
+                        'attribute_value' => str_replace(' ', '', strtoupper($value))
+                    ];
+                    AttributeValue::create($row);
+
+                }
+            }
+
+
+            // 去除空的属性值
+
+            DB::commit();
+            session()->flash('success', '规格添加成功');
+            return redirect()->route('types.index');
+        } catch (Exception $e) {
+            DB::rollBack();
+            return redirect()->back()->withInput();
+        }
     }
 
     /**
@@ -69,7 +129,8 @@ class TypeController extends Controller
     public function edit(GoodsType $type)
     {
         //
-
+        //$type= $type->with('attributes.attrValues');
+        $type= GoodsType::where('id',$type->id)->with('attributes.attrValues')->find($type->id)->toArray();
         return view('admin.pages.type.edit',compact('type'));
     }
 
@@ -80,13 +141,68 @@ class TypeController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(TypeStoreRequest $typeStoreRequest, $type)
+    public function update(TypeStoreRequest $request, GoodsType $type)
     {
         //
-        $data = $typeStoreRequest->validated();
-        GoodsType::where('id',$type)->update($data);
-        session()->flash('success','修改成功');
-        return  redirect()->route('types.index');
+
+        $data = $request->validated();
+        DB::beginTransaction();
+        try {
+            $type->update($data);
+
+            foreach ($data['attr'] as $i => $attr) {
+                if (trim($attr['name'] == '')) {
+                    unset($attr['attr'][$i]);
+                    continue;
+                }
+                foreach ($attr['value'] as $k => $value) {
+                    if (trim($value == '')) {
+                        unset($data['attr'][$i]['value'][$k]);
+                    }
+                    // $arr = explode(',',$value);
+                    // unset( $data['spec'][$i]['value']);
+                    // $data['spec'][$i]['value'] = $arr;
+                }
+                if (empty($data['attr'][$i]['value'])) {
+                    unset($data['attr'][$i]);
+                }
+            }
+                Attribute::where('goods_type_id',$type->id)->delete();
+
+            // 批量添加新的规格值
+            // 批量添加新的规格名
+            foreach ($data['attr'] as $i => $attr) {
+                $row = [
+                    'attribute_name' => $attr['name'],
+                    'goods_type_id' => $type->id
+                ];
+                $attrData[] =  Attribute::create($row);
+            }
+            AttributeValue::where('goods_type_id',$type->id)->delete();
+            // 批量添加新的规格值
+            foreach ($data['attr'] as $i => $attr) {
+                foreach ($attr['value'] as $k=>$value) {
+                    $row = [
+                        'goods_type_id' =>$type->id,
+                        'attribute_id' => $attrData[$i]['id'],
+                        'attribute_color_value' => $attr['color'][$k],
+                        'attribute_value' => str_replace(' ', '', strtoupper($value))
+                    ];
+                    AttributeValue::create($row);
+
+                }
+            }
+
+
+            // 去除空的属性值
+
+            DB::commit();
+            session()->flash('success', '规格修改成功');
+            return redirect()->route('types.index');
+        } catch (Exception $e) {
+            DB::rollBack();
+            return redirect()->back()->withInput();
+        }
     }
 
     /**
@@ -100,9 +216,9 @@ class TypeController extends Controller
         //
 
         $total = Product::where('goods_type_id', $type->id)->count();
-    
+
         if ($total>0) {
-          
+
             return response()->json(['code'=>400,'msg'=>'该模型有商品使用中,无法删除']);
         }
         $type->delete();
@@ -117,7 +233,7 @@ class TypeController extends Controller
         $type = GoodsType::with(['attributes','attributes.attrValues'])->where('id',$request->type_id)->get()->toArray();
         foreach($type as $k =>$v){
             $data['attrs'] = $v['attributes'];
-         
+
         }
 
 

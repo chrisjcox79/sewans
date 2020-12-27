@@ -2,6 +2,8 @@
 
 namespace App\Providers;
 
+use App\Observers\CategoryObserver;
+use App\Models\Category;
 use Illuminate\Support\ServiceProvider;
 use Illuminate\Support\Facades\Schema;
 
@@ -27,6 +29,7 @@ class AppServiceProvider extends ServiceProvider
         //
         Schema::defaultStringLength(191);
         // $this->app['request']->server->set('HTTPS',true);
+       Category::observe(CategoryObserver::class);
     }
 
 }

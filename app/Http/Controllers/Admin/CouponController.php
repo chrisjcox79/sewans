@@ -2,12 +2,13 @@
 
 namespace App\Http\Controllers\Admin;
 
+use App\Http\Controllers\AdminController;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\CouponFormRequest;
 use App\Models\CouponCodes;
 use Illuminate\Http\Request;
 use Illuminate\Support\Carbon;
-class CouponController extends Controller
+class CouponController extends AdminController
 {
     /**
      * Display a listing of the resource.
@@ -20,7 +21,7 @@ class CouponController extends Controller
         $obj = new CouponCodes();
         $coupons = CouponCodes::orderBy('created_at', 'desc')->paginate(15);
         $coupons = $obj->getDescriptionAttribute($coupons);
-          
+
         return view('admin.pages.coupons.index',compact('coupons'));
     }
 
@@ -73,7 +74,7 @@ class CouponController extends Controller
     {
         //
 
-      
+
         return view('admin.pages.coupons.edit',compact('coupon'));
 
     }
@@ -88,7 +89,7 @@ class CouponController extends Controller
     public function update(CouponFormRequest $request, $coupon)
     {
         //
-     
+
         $result = CouponCodes::where('id',$coupon)->update($request->validated());
         if( $result){
             session()->flash('success','更新成功');
@@ -108,7 +109,7 @@ class CouponController extends Controller
     public function destroy(CouponCodes $coupon)
 
     {
-        // 
+        //
         $coupon->delete();
         return response()->json(['code'=>200,'msg'=>'删除成功']);
     }

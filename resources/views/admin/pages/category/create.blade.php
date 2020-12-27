@@ -10,10 +10,10 @@
 @include('admin.layout.error')
 @include('admin.layout.message')
 <div class="row">
-  
+
   <div class="col-md-12 grid-margin stretch-card">
     <div class="card">
-      
+
 
       <div class="card-body">
         <h6 class="card-title">添加分类</h6>
@@ -32,13 +32,25 @@
             <select class="form-control mb-3" name="pid">
                 <option  value="0">作为顶级分类</option>
                 @foreach ($categories as $item)
-                <option value="{{$item['id']}}">{{str_repeat('--',$item['level']*3)}}{{$item['cate_name']}}</option>
+                <option value="{{$item['id']}}">{{str_repeat('-',$item['level']*3)}}{{$item['cate_name']}}</option>
+                    @if ($item['children'])
+                        @foreach ($item['children'] as $v)
+                            <option value="{{$v['id']}}">{{str_repeat('--',$v['level']*3)}}{{$v['cate_name']}}</option>
+                            @if ($v['children'])
+                                @foreach ($v['children'] as $k)
+                                    <option value="{{$k['id']}}">{{str_repeat('--',$k['level']*3)}}{{$k['cate_name']}}</option>
+
+                                @endforeach
+                            @endif
+
+                        @endforeach
+                     @endif
                 @endforeach
-               
-                
+
+
             </select>
         </div>
-         
+
           <div class="form-group">
             <label>是否显示</label>
             <div class="form-check">
@@ -53,7 +65,7 @@
                 不显示
               </label>
             </div>
-        
+
           </div>
           <div class="form-group">
             <label>是否热门</label>
@@ -69,9 +81,9 @@
               否
               </label>
             </div>
-        
+
           </div>
-    
+
           <button class="btn btn-primary" type="submit">添加</button>
         </form>
       </div>

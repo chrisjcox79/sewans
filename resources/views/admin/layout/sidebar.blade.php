@@ -99,36 +99,19 @@
           </ul>
         </div>
       </li>
-      <li class="nav-item {{ active_class(['forms/*']) }}">
-        <a class="nav-link" data-toggle="collapse" href="#forms" role="button" aria-expanded="{{ is_active_route(['forms/*']) }}" aria-controls="forms">
-          <i class="link-icon" data-feather="inbox"></i>
-          <span class="link-title">商品规格</span>
-          <i class="link-arrow" data-feather="chevron-down"></i>
-        </a>
-        <div class="collapse {{ show_class(['forms/*']) }}" id="forms">
-          <ul class="nav sub-menu">
-            <li class="nav-item">
-              <a href="{{ route('attribute.index') }}" class="nav-link {{ active_class(['forms/basic-elements']) }}">规格列表</a>
-            </li>
-            <li class="nav-item">
-              <a href="{{route('attribute.create') }}" class="nav-link {{ active_class(['forms/advanced-elements']) }}">新增规格</a>
-            </li>
-          </ul>
-        </div>
-      </li>
       <li class="nav-item {{ active_class(['charts/*']) }}">
         <a class="nav-link" data-toggle="collapse" href="#charts" role="button" aria-expanded="{{ is_active_route(['charts/*']) }}" aria-controls="charts">
           <i class="link-icon" data-feather="pie-chart"></i>
-          <span class="link-title">商品模型</span>
+          <span class="link-title">商品规格</span>
           <i class="link-arrow" data-feather="chevron-down"></i>
         </a>
         <div class="collapse {{ show_class(['charts/*']) }}" id="charts">
           <ul class="nav sub-menu">
             <li class="nav-item">
-              <a href="{{ route('types.index')}}" class="nav-link {{ active_class(['charts/apex']) }}">模型列表</a>
+              <a href="{{ route('types.index')}}" class="nav-link {{ active_class(['charts/apex']) }}">规格列表</a>
             </li>
             <li class="nav-item">
-              <a href="{{ route('types.create') }}" class="nav-link {{ active_class(['charts/chartjs']) }}">新增模型</a>
+              <a href="{{ route('types.create') }}" class="nav-link {{ active_class(['charts/chartjs']) }}">新增规格</a>
             </li>
 
           </ul>

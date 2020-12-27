@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers\Admin;
 
+use App\Http\Controllers\AdminController;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use App\Http\Requests\CategoryRequest;
@@ -17,8 +18,11 @@ class CategoryController extends Controller
     public function index()
     {
         //
-        $category = Category::all();
-        return view('admin.pages.category.index',compact('category'));
+
+
+        $category = cache_category_all();
+
+        return view('admin.pages.category.index', compact('category'));
     }
 
     /**
@@ -29,38 +33,47 @@ class CategoryController extends Controller
     public function create()
     {
         //
-        $categories = Category::all()->toArray();
-        $categories= get_cate_list($categories);
-        return view('admin.pages.category.create',compact('categories'));
+//        $categories = Category::all()->toArray();
+//        $categories= get_cate_list($categories);
+        $categories = cache_category();
+        return view('admin.pages.category.create', compact('categories'));
     }
 
     /**
      * Store a newly created resource in storage.
      *
-     * @param  \Illuminate\Http\Request  $request
+     * @param \Illuminate\Http\Request $request
      * @return \Illuminate\Http\Response
      */
     public function store(CategoryRequest $request)
     {
         //
-        $data =$request->validated();
-        if($data['pid']==0){
-            $data['level'] = 0;
-            $data['pid_path']=0;
-            $data['pid_path_name']='';
-        }else{
+        $data = $request->validated();
+
+        if ($data['pid'] == 0) {
+            $data['level'] = 1;
+            $data['pid_path'] = 0;
+            $data['pid_path_name'] = '';
+        } else {
             $info = Category::find($data['pid']);
-            $data['pid_path'] = $info['pid_path'].'_'.$info['id'];
-            $data['level'] = $info['level']+1;
-            $data['pid_path_name'] = trim($info['pid_path_name'].'<span aria-hidden="true">|</span><span>'.$data["cate_name"].'</span>');
+
+            if ($info['level'] >= 3) {
+                session()->flash('danger', '分类级别不能超过3级');
+                return redirect()->back()->withInput();
+            }else{
+                $data['pid_path'] = $info['pid_path'] . '_' . $info['id'];
+                $data['level'] = $info['level'] + 1;
+                $data['pid_path_name'] = trim($info['pid_path_name'] . '<span aria-hidden="true">|</span><span>' . $data["cate_name"] . '</span>');
+            }
+
         }
 
-        $category =  Category::create($data);
-        if($category){
-            session()->flash('success','添加成功');
+        $category = Category::create($data);
+        if ($category) {
+            session()->flash('success', '添加成功');
             return redirect()->route('category.index');
-        }else{
-            session()->flash('danger','添加失败');
+        } else {
+            session()->flash('danger', '添加失败');
             return redirect()->route('category.index');
         }
     }
@@ -68,7 +81,7 @@ class CategoryController extends Controller
     /**
      * Display the specified resource.
      *
-     * @param  int  $id
+     * @param int $id
      * @return \Illuminate\Http\Response
      */
     public function show($id)
@@ -79,45 +92,45 @@ class CategoryController extends Controller
     /**
      * Show the form for editing the specified resource.
      *
-     * @param  int  $id
+     * @param int $id
      * @return \Illuminate\Http\Response
      */
     public function edit(Category $category)
     {
         //
         $categories = Category::all()->toArray();
-        $categories= get_cate_list($categories);
-        return view('admin.pages.category.edit',compact('category','categories'));
+        $categories = get_cate_list($categories);
+        return view('admin.pages.category.edit', compact('category', 'categories'));
     }
 
     /**
      * Update the specified resource in storage.
      *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  int  $id
+     * @param \Illuminate\Http\Request $request
+     * @param int $id
      * @return \Illuminate\Http\Response
      */
     public function update(CategoryRequest $request, $category)
     {
         //
-        $data =$request->validated();
-        if($data['pid']==0){
+        $data = $request->validated();
+        if ($data['pid'] == 0) {
             $data['level'] = 0;
-            $data['pid_path']=0;
-            $data['pid_path_name']='';
-        }else{
+            $data['pid_path'] = 0;
+            $data['pid_path_name'] = '';
+        } else {
             $info = Category::find($data['pid']);
-            $data['pid_path'] = $info['pid_path'].'_'.$info['id'];
-            $data['level'] = $info['level']+1;
-            $data['pid_path_name'] = trim($info['pid_path_name'].'<span aria-hidden="true">|</span><span>'.$data["cate_name"].'</span>');
+            $data['pid_path'] = $info['pid_path'] . '_' . $info['id'];
+            $data['level'] = $info['level'] + 1;
+            $data['pid_path_name'] = trim($info['pid_path_name'] . '<span aria-hidden="true">|</span><span>' . $data["cate_name"] . '</span>');
         }
 
-        $category =  Category::where('id',$category)->update($data);
-        if($category){
-            session()->flash('success','更新成功');
+        $category = Category::where('id', $category)->update($data);
+        if ($category) {
+            session()->flash('success', '更新成功');
             return redirect()->route('category.index');
-        }else{
-            session()->flash('danger','更新失败');
+        } else {
+            session()->flash('danger', '更新失败');
             return redirect()->back();
         }
     }
@@ -125,27 +138,28 @@ class CategoryController extends Controller
     /**
      * Remove the specified resource from storage.
      *
-     * @param  int  $id
+     * @param int $id
      * @return \Illuminate\Http\Response
      */
     public function destroy(Category $category)
 
     {
         //
-    
+
         $total = Category::where('pid', $category->id)->count();
-    
-        if ($total>0) {
-          
-            return response()->json(['code'=>400,'msg'=>'分类下有子分类,无法删除']);
+
+        if ($total > 0) {
+
+            return response()->json(['code' => 400, 'msg' => '分类下有子分类,无法删除']);
         }
         $category->delete();
-        return response()->json(['code'=>200,'msg'=>'删除成功']);
+        return response()->json(['code' => 200, 'msg' => '删除成功']);
     }
+
     public function categoryapi(Request $request)
     {
-        $data = Category::where('pid',$request->pid)->get();
-        return response()->json(['code'=>200,'data'=>$data]);
+        $data = Category::where('pid', $request->pid)->get();
+        return response()->json(['code' => 200, 'data' => $data]);
     }
 }
 

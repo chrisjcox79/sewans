@@ -25,16 +25,27 @@ class TypeStoreRequest extends FormRequest
     {
         return [
             //
-            'type_name'=>'required',
-            'status'=>'required'
+            'type_name'=>'required|unique:goods_types,id'.$this->id,
+            'attr.*.name'=>'required|string',
+            'attr.*.value.*'=>'required|string',
+            'attr.*.color.*'=>'required|string'
+
+
         ];
     }
+
     public function messages()
     {
         return [
-            'type_name.required'=>'模型名称不能为空',
-            'type_name.unique'=>'模型名称已存在',
-            'type_name.required'=>'规格名称不能为空',
+            'type_name.required'=>'商品模型属性不能为空',
+            'attr.required'=>'规格值不能为空',
+            'attr.*.name.required'=>'规格名称不能为空',
+            'attr.*.value.*.required'=>'规格值不能为空',
+            'attr.*.color.*.required'=>'颜色值不能为空',
+
+
+
+
         ];
     }
 }

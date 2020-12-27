@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers\Admin;
 
+use App\Http\Controllers\AdminController;
 use App\Http\Controllers\Controller;
 use App\Models\Brands;
 use App\Models\Product;
@@ -9,7 +10,7 @@ use Illuminate\Http\Request;
 use App\Models\Category;
 use App\Models\GoodsType;
 
-class ProductController extends Controller
+class ProductController extends AdminController
 {
     /**
      * Display a listing of the resource.

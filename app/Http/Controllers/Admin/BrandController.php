@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers\Admin;
 
+use App\Http\Controllers\AdminController;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\BrandFormUpdateRequest;
 use App\Http\Requests\BrandStoreRequest;
@@ -10,14 +11,14 @@ use App\Models\Brands;
 use App\Models\Product;
 use Illuminate\Support\Facades\Storage;
 use Image;
-use Illuminate\Support\Facades\File; 
+use Illuminate\Support\Facades\File;
 
 
 
 
 
 
-class BrandController extends Controller
+class BrandController extends AdminController
 {
     /**
      * Display a listing of the resource.
@@ -27,7 +28,7 @@ class BrandController extends Controller
     public function index()
     {
         //
-        
+
         $brands = Brands::all();
         return view('admin.pages.brand.index', compact('brands'));
     }
@@ -52,14 +53,14 @@ class BrandController extends Controller
     public function store(BrandStoreRequest $brandFormRequest)
     {
         //
-      
 
-        $data = $brandFormRequest->validated();        
+
+        $data = $brandFormRequest->validated();
         $path = $brandFormRequest->file('logo') ->store(
             'uploads/brand/logo/' . date("Y-m-d", time()),['disk'=>'logo']
           );
         $img = Image::make($path)->resize(400,300);
-    
+
         $img->save( $path );
         $data['logo']= $path;
         $res = Brands::create($data);
@@ -107,20 +108,20 @@ class BrandController extends Controller
     public function update(BrandFormUpdateRequest $request,$brand)
     {
         //
-      
-        $data =  $request->validated();  
+
+        $data =  $request->validated();
         if( $request->hasfile('logo')){
             $path =  $request->file('logo') ->store(
                 'uploads/brand/logo/' . date("Y-m-d", time()),['disk'=>'logo']
               );
             $img = Image::make($path)->resize(400,300);
-        
+
             $img->save( $path );
             $data['logo']= $path;
             File::delete($data['old_logo']);
-        } 
-        unset($data['old_logo']); 
-      
+        }
+        unset($data['old_logo']);
+
         $res = Brands::where('id',$brand)->update($data);
         if($res){
             session()->flash('success','更新成功');

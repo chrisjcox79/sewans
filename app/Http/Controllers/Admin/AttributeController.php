@@ -2,8 +2,10 @@
 
 namespace App\Http\Controllers\Admin;
 
+use App\Http\Controllers\AdminController;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\AttributeFormRequest;
+use App\Models\Admin;
 use App\Models\Attribute;
 use App\Models\AttributeValue;
 use App\Models\GoodsType;
@@ -13,7 +15,7 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 
 
-class AttributeController extends Controller
+class AttributeController extends AdminController
 {
     /**
      * Display a listing of the resource.
@@ -53,7 +55,7 @@ class AttributeController extends Controller
 
 
         $data = $request->validated();
-    
+
         DB::beginTransaction();
         try {
             $type = GoodsType::create($data);
