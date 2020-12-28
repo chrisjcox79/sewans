@@ -1,32 +1,13 @@
     <div class="top-header-wrapper">
-            <div class="top-header">
-                <div class="container-fluid">
-                    <div class="row">
-                        <div class="col-8 col-sm-8 col-md-4 col-lg-4 text-left d-none d-sm-none d-md-none d-lg-block">
-                            <a href="tel:440011104420833"><i class="anm anm-phone-l"></i> +440 0(111) 044 833</a>
-                            <a href="/cdn-cgi/l/email-protection#0c7f6d60697f4c7563797e7f78637e69626d6169226f6361"><i
-                                    class="anm anm-envelope-l"></i> <span class="__cf_email__"
-                                    data-cfemail="097a68656c7a497a7d667b6c6768646c276a6664">[email&#160;protected]</span></a>
-                        </div>
-                        <div class="col-12 col-sm-12 col-md-12 col-lg-4 text-center d-xs-block d-sm-block d-lg-block">
-                            Increase &amp; Maximize sales with AVONE.
-                        </div>
-                        <div class="col-4 col-sm-4 col-md-4 col-lg-4 text-right d-none d-sm-none d-md-none d-lg-block">
-                            Follow Us:
-                            <ul class="header-social-icons">
-                                <li><a href="#" target="_blank"><i class="icon icon-facebook"></i></a></li>
-                                <li><a href="#" target="_blank"><i class="icon icon-twitter"></i></a></li>
-                                <li><a href="#" target="_blank"><i class="icon icon-pinterest"></i></a></li>
-                                <li><a href="#" target="_blank"><i class="icon icon-instagram"></i></a></li>
-                                <li><a href="#" target="_blank"><i class="icon icon-youtube"></i></a></li>
-                            </ul>
-                        </div>
-                    </div>
-                </div>
-            </div>
+        <!--Promotion Bar-->
+        <div class="notification-bar mobilehide" style="background-color: rgb(189, 223, 201);">
+            <a href="#" class="notification-bar__message"><img src="home/assets/images/1140x50-a_8.jpg" alt="" class="img-fluid"></a>
+            <span class="close-announcement"><i class="anm anm-times-l" aria-hidden="true"></i></span>
+        </div>
+        <!--End Promotion Bar-->
         </div>
         <header class="header animated d-flex align-items-center header-1">
-            <div class="container-fluid">
+            <div class="container">
                 <div class="row">
                     <!--Mobile Icons-->
                     <div class="col-4 col-sm-4 col-md-4 d-block d-lg-none mobile-icons">
@@ -44,17 +25,17 @@
                     </div>
                     <!--Mobile Icons-->
                     <!--Desktop Logo-->
-                    <div class="logo col-4 col-sm-4 col-md-4 col-lg-1 align-self-center">
+                    <div class="logo col-4 col-sm-4 col-md-4 col-lg-2 align-self-center">
                         <a href="{{route('home')}}">
-                            <img src="{{asset('home/assets/images/SEWANS.png')}}" alt="Avone Multipurpose Html Template"
-                                title="Avone Multipurpose Html Template" />
+                            <img src="{{asset('home/assets/images/logo.jpg')}}" alt="SEWANS" class="img-fluid"
+                                title="SEWANS" />
                         </a>
                     </div>
                     <!--End Desktop Logo-->
-                    <div class="col-1 col-sm-1 col-md-1 col-lg-9 align-self-center d-menu-col">
+                    <div class="col-1 col-sm-1 col-md-1 col-lg-8 align-self-center d-menu-col">
                         <!--Desktop Menu-->
                         <nav class="grid__item" id="AccessibleNav">
-                            <ul id="siteNav" class="site-nav medium left hidearrow">
+                            <ul id="siteNav" class="site-nav medium center hidearrow">
                                 <li class="lvl1 parent megamenu mdropdown"><a href="{{route('home')}}">首页 <i
                                             class="anm anm-angle-down-l"></i></a>
                                     {{-- <div class="megamenu style1">
@@ -314,14 +295,14 @@
                                 </li>
                                 <li class="lvl1 parent dropdown"><a href="#">童装 <i
                                             class="anm anm-angle-down-l"></i></a>
-                                    <ul class="dropdown">
-                                        <li><a href="lookbook-2columns.html" class="site-nav">2 Columns</a></li>
-                                        <li><a href="lookbook-3columns.html" class="site-nav">3 Columns</a></li>
-                                        <li><a href="lookbook-4columns.html" class="site-nav">4 Columns</a></li>
-                                        <li><a href="lookbook-5columns.html" class="site-nav">5 Columns + Fullwidth</a>
-                                        </li>
-                                        <li><a href="lookbook-shop.html" class="site-nav">Lookbook Shop</a></li>
-                                    </ul>
+{{--                                    <ul class="dropdown">--}}
+{{--                                        <li><a href="lookbook-2columns.html" class="site-nav">2 Columns</a></li>--}}
+{{--                                        <li><a href="lookbook-3columns.html" class="site-nav">3 Columns</a></li>--}}
+{{--                                        <li><a href="lookbook-4columns.html" class="site-nav">4 Columns</a></li>--}}
+{{--                                        <li><a href="lookbook-5columns.html" class="site-nav">5 Columns + Fullwidth</a>--}}
+{{--                                        </li>--}}
+{{--                                        <li><a href="lookbook-shop.html" class="site-nav">Lookbook Shop</a></li>--}}
+{{--                                    </ul>--}}
                                 </li>
                                 <li class="lvl1 parent dropdown"><a href="#">MAGAZINE <i
                                             class="anm anm-angle-down-l"></i></a>

@@ -17,7 +17,7 @@
     <link rel="stylesheet" href="{{ asset('home/assets/css/responsive.css?x') }}">
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/2.1.4/toastr.min.css" integrity="sha512-6S2HWzVFxruDlZxI3sXOZZ4/eJ8AcxkQH1+JjSe/ONCEqR9L4Ysq5JdT5ipqtzU7WHalNwzwBv+iE51gNHJNqQ==" crossorigin="anonymous" /></head>
 
-<body class="template-index index-demo2">
+<body class="template-index index-demo17">
     {{-- <div id="pre-loader">
         <img src="{{ asset('assets/images/Spinner-1s-200px.gif') }}" alt="Loading..." />
     </div> --}}
@@ -64,6 +64,7 @@
     <!-- Including Javascript -->
     <script src="{{ asset('home/assets/js/plugins.js') }}"></script>
     <script src="{{ asset('home/assets/js/main.js?') }}"></script>
+    <script src="{{ asset('home/assets/js/vendor/photoswipe.min.js') }}"></script>
     {{-- <script src="{{ asset(mix('js/app.js')) }}"></script> --}}
         {{-- @yield('js') --}}
 </body>

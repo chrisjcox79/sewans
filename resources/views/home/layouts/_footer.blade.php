@@ -49,7 +49,7 @@
             <div class="footer-bottom clearfix">
                 <div class="container">
                     <div class="copytext">
-                        &copy; 2020 Avone. All Rights <a href="http://www.bootstrapmb.com/">reserved</a>.
+                        &copy; 2020 SEWANS. All Rights <a href="#">reserved</a>.
                     </div>
                 </div>
             </div>

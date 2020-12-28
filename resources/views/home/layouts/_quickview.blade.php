@@ -11,27 +11,27 @@
 						<div class="carousel-inner">
 							<!-- slide 1 -->
 							<div class="item carousel-item active" data-slide-number="0">
-								<img data-src="home/assets/images/product-images/product2.jpg" src="home/assets/images/product-images/product2.jpg" alt="" title="">
+								<img data-src="home/assets/images/demo/NSCIH0420D0006CIH0420D0006_x_a001_big.jpg" src="home/assets/images/demo/NSCIH0420D0006CIH0420D0006_x_a001_big.jpg" alt="" title="">
 							</div>
 							<!-- End slide 1 -->
 							<!-- slide 2 -->
 							<div class="item carousel-item" data-slide-number="1">
-								<img data-src="home/assets/images/product-images/product2-1.jpg" src="home/assets/images/product-images/product2-1.jpg" alt="" title="">
+								<img data-src="home/assets/images/demo/NSCIH0420D0006CIH0420D0006_x_c102.jpg" src="home/assets/images/demo/NSCIH0420D0006CIH0420D0006_x_c102.jpg" alt="" title="">
 							</div>
 							<!-- End slide 3 -->
 							<!-- slide 2 -->
-							<div class="item carousel-item" data-slide-number="2">
-								<img data-src="home/assets/images/product-images/product2-2.jpg" src="home/assets/images/product-images/product2-2.jpg" alt="" title="">
-							</div>
+                            <div class="item carousel-item" data-slide-number="2">
+                                <img data-src="home/assets/images/demo/NSCIH0420D0006CIH0420D0006_x_c102.jpg" src="home/assets/images/demo/NSCIH0420D0006CIH0420D0006_x_c102.jpg" alt="" title="">
+                            </div>
 							<!-- End slide 3 -->
 							<!-- slide 4 -->
 							<div class="item carousel-item" data-slide-number="3">
-								<img data-src="home/assets/images/product-images/product2-3.jpg" src="home/assets/images/product-images/product2-3.jpg" alt="" title="">
+								<img data-src="home/assets/images/demo/NSCIH0420D0006CIH0420D0006_x_c104.jpg" src="home/assets/images/demo/NSCIH0420D0006CIH0420D0006_x_c104.jpg" alt="" title="">
 							</div>
 							<!-- End slide 4 -->
 							<!-- slide 5 -->
 							<div class="item carousel-item" data-slide-number="4">
-								<img data-src="home/assets/images/product-images/product2-4.jpg" src="home/assets/images/product-images/product2-4.jpg" alt="" title="">
+                                <img data-src="home/assets/images/demo/NSCIH0420D0006CIH0420D0006_x_c105.jpg" src="home/assets/images/demo/NSCIH0420D0006CIH0420D0006_x_c105.jpg" alt="" title="">
 							</div>
 							<!-- End slide 4 -->
 						</div>
@@ -43,35 +43,35 @@
 								<!-- slide 1 -->
 								<li class="list-inline-item active">
 									<a id="carousel-selector-0" class="selected" data-slide-to="0" data-target="#myCarousel">
-										<img data-src="home/assets/images/product-images/product2.jpg" src="home/assets/images/product-images/product2.jpg" alt="" title="">
+										<img data-src="home/assets/images/demo/NSCIH0420D0006CIH0420D0006_x_a001.jpg" src="home/assets/images/demo/NSCIH0420D0006CIH0420D0006_x_a001.jpg" alt="" title="">
 									</a>
 								</li>
 								<!-- End slide 1 -->
 								<!-- slide 2 -->
 								<li class="list-inline-item">
 									<a id="carousel-selector-1" data-slide-to="1" data-target="#myCarousel">
-										<img data-src="home/assets/images/product-images/product2-1.jpg" src="home/assets/images/product-images/product2-1.jpg" alt="" title="">
+                                        <img data-src="home/assets/images/demo/NSCIH0420D0006CIH0420D0006_x_c102s.jpg" src="home/assets/images/demo/NSCIH0420D0006CIH0420D0006_x_c102s.jpg" alt="" title="">
 									</a>
 								</li>
 								<!-- End slide 2 -->
 								<!-- slide 3 -->
 								<li class="list-inline-item">
 									<a id="carousel-selector-2" class="selected" dataslide-to="2" data-target="#myCarousel">
-										<img data-src="home/assets/images/product-images/product2-2.jpg" src="home/assets/images/product-images/product2-2.jpg" alt="" title="">
+                                        <img data-src="home/assets/images/demo/s1.jpg" src="home/assets/images/demo/s1.jpg" alt="" title="">
 									</a>
 								</li>
 								<!-- End slide 3 -->
 								<!-- slide 4 -->
 								<li class="list-inline-item">
 									<a id="carousel-selector-3" data-slide-to="3" data-target="#myCarousel">
-										<img data-src="home/assets/images/product-images/product2-3.jpg" src="home/assets/images/product-images/product2-3.jpg" alt="" title="">
+										<img data-src="home/assets/images/demo/s1.jpg" src="home/assets/images/demo/s1.jpg" alt="" title="">
 									</a>
 								</li>
 								<!-- End slide 4 -->
 								<!-- slide 5 -->
 								<li class="list-inline-item">
 									<a id="carousel-selector-4" data-slide-to="4" data-target="#myCarousel">
-										<img data-src="home/assets/images/product-images/product2-4.jpg" src="home/assets/images/product-images/product2-4.jpg" alt="" title="">
+                                        <img data-src="home/assets/images/demo/NSCIH0420D0006CIH0420D0006_x_c105s.jpg" src="home/assets/images/demo/NSCIH0420D0006CIH0420D0006_x_c105s.jpg" alt="" title="">
 									</a>
 								</li>
 								<!-- End slide 5 -->
@@ -88,7 +88,7 @@
 			</div>
 			<div class="col-12 col-sm-6 col-md-6 col-lg-6">
 				<div class="product-brand"><a href="#">Charcoal</a></div>
-				<h2 class="product-title">Product Quick View Popup</h2>
+				<h2 class="product-title">nissen 可水洗,抗UV,100%純棉V領針織毛衣 (日本女裝)</h2>
 				<div class="product-review">
 					<div class="rating">
 						<i class="font-13 fa fa-star"></i><i class="font-13 fa fa-star"></i><i class="font-13 fa fa-star"></i><i class="font-13 fa fa-star"></i><i class="font-13 fa fa-star"></i>
@@ -165,7 +165,7 @@
 										<a class="qtyBtn plus" href="javascript:void(0);"><i class="fa anm anm-plus-r" aria-hidden="true"></i></a>
 									</div>
 								</div>
-							</div>                                
+							</div>
 							<div class="add-to-cart">
 								<button type="button" class="btn button-cart">
 									<span>Add to cart</span>
