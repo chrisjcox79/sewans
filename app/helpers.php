@@ -95,25 +95,29 @@ if(!function_exists('clear_cache_category')){
         cache()->forget('cache_category_all');
     }
 }
-function get_db_config()
-{
-    if (getenv('IS_IN_HEROKU')) {
-        $url = parse_url(getenv("DATABASE_URL"));
 
-        return $db_config = [
-            'connection' => 'pgsql',
-            'host' => $url["host"],
-            'database'  => substr($url["path"], 1),
-            'username'  => $url["user"],
-            'password'  => $url["pass"],
-        ];
-    } else {
-        return $db_config = [
-            'connection' => env('DB_CONNECTION', 'mysql'),
-            'host' => env('DB_HOST', 'localhost'),
-            'database'  => env('DB_DATABASE', 'forge'),
-            'username'  => env('DB_USERNAME', 'forge'),
-            'password'  => env('DB_PASSWORD', ''),
-        ];
+if(!function_exists('get_db_config')){
+    function get_db_config()
+    {
+        if (getenv('IS_IN_HEROKU')) {
+            $url = parse_url("postgres://dcgxdubhdqxyhk:8c175bcc874a1eb0650fe0c549b3a38b99f9c875210001c347c1084725bafed8@ec2-3-213-106-122.compute-1.amazonaws.com:5432/dabfvus398sjch");
+
+            return $db_config = [
+                'connection' => 'pgsql',
+                'host' => $url["host"],
+                'database'  =>ltrim($url["path"], "/"),
+                'username'  => $url["user"],
+                'password'  => $url["pass"],
+            ];
+        } else {
+            return $db_config = [
+                'connection' => env('DB_CONNECTION', 'mysql'),
+                'host' => env('DB_HOST', 'localhost'),
+                'database'  => env('DB_DATABASE', 'forge'),
+                'username'  => env('DB_USERNAME', 'forge'),
+                'password'  => env('DB_PASSWORD', ''),
+            ];
+        }
     }
+
 }
