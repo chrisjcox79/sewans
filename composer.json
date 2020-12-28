@@ -40,12 +40,15 @@
         "psr-4": {
             "App\\": "app/"
         },
+        "files": [
+            "app/helpers.php"
+        ],
         "classmap": [
             "database/seeds",
             "database/factories"
         ]
     },
-    "autoload": {
+    "autoload-dev": {
         "psr-4": {
             "Tests\\": "tests/"
         },
