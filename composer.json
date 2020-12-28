@@ -45,7 +45,7 @@
             "database/factories"
         ]
     },
-    "autoload-dev": {
+    "autoload": {
         "psr-4": {
             "Tests\\": "tests/"
         },
