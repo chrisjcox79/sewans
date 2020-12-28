@@ -96,7 +96,7 @@ if(!function_exists('clear_cache_category')){
     }
 }
 
-if(!function_exists('get_db_config')){
+
     function get_db_config()
     {
         if (getenv('IS_IN_HEROKU')) {
@@ -120,4 +120,4 @@ if(!function_exists('get_db_config')){
         }
     }
 
-}
+
