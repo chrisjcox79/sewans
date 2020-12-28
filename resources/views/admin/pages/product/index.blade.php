@@ -10,104 +10,239 @@
 
     @include('admin.layout.message')
     <div class="row">
+        <div class="col-md-12 stretch-card">
+            <div class="card">
+                <div class="card-body">
+                    <h6 class="card-title">商品搜索</h6>
+                    <form>
+                        <div class="row">
+                            <div class="col-sm-10">
+                                <div class="row">
+                                    <div class="col-sm-3">
+                                        <div class="form-group">
+                                            <label class="control-label">商品分类</label>
+                                            <input type="text" class="form-control" placeholder="Enter first name">
+                                        </div>
+                                    </div><!-- Col -->
+                                    <div class="col-sm-3">
+                                        <div class="form-group">
+                                            <label class="control-label">商品名称</label>
+                                            <input type="text" class="form-control" placeholder="Enter last name">
+                                        </div>
+                                    </div><!-- Col -->
+                                    <div class="col-sm-3">
+                                        <div class="form-group">
+                                            <label class="control-label">商品编码</label>
+                                            <input type="text" class="form-control" placeholder="Enter last name">
+                                        </div>
+                                    </div><!-- Col -->
+                                    <div class="col-sm-3">
+                                        <div class="form-group">
+                                            <label class="control-label">SKU编码</label>
+                                            <input type="text" class="form-control" placeholder="Enter last name">
+                                        </div>
+                                    </div><!-- Col -->
+                                </div><!-- Row -->
+                                <div class="row">
+                                    <div class="col-sm-3">
+                                        <div class="form-group">
+                                            <label class="control-label">库存量</label>
+                                            <div class="row">
+                                                <div class="col-6">
+                                                    <input type="text" class="form-control"
+                                                           placeholder="Enter first name">
+                                                </div>
+                                                <div class="col-6">
+
+                                                    <input type="text" class="form-control"
+                                                           placeholder="Enter first name">
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div><!-- Col -->
+                                    <div class="col-sm-3">
+                                        <div class="form-group">
+                                            <label class="control-label">累积销量</label>
+                                            <div class="row">
+                                                <div class="col-6">
+                                                    <input type="text" class="form-control"
+                                                           placeholder="Enter first name">
+                                                </div>
+                                                <div class="col-6">
+
+                                                    <input type="text" class="form-control"
+                                                           placeholder="Enter first name">
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div><!-- Col -->
+                                    <div class="col-sm-3">
+                                        <div class="form-group">
+                                            <label class="control-label">发布时间</label>
+                                            <div class="row">
+                                                <div class="col-6">
+                                                    <div class="input-group date datepicker" id="couponStart">
+                                                        <input type="text" class="form-control" name="not_before"
+                                                               autocomplete="off"><span
+                                                            class="input-group-addon"><i
+                                                                data-feather="calendar"></i></span>
+                                                    </div>
+                                                </div>
+
+                                                <div class="col-6">
+                                                    <div class="input-group date datepicker" id="couponEnd">
+                                                        <input type="text" class="form-control" name="not_after"
+                                                               autocomplete="off"><span
+                                                            class="input-group-addon"><i
+                                                                data-feather="calendar"></i></span>
+                                                    </div>
+
+                                                </div>
+                                            </div>
+                                        </div>
+
+                                    </div><!-- Col -->
+                                    <div class="col-sm-3">
+                                        <div class="form-group">
+                                            <label class="control-label">销售状态</label>
+                                            <div class="row">
+                                                <div class="col-6 d-flex align-items-center">
+                                                    <div class="form-check">
+                                                        <label class="form-check-label">
+                                                            <input type="radio" class="form-check-input"
+                                                                   name="optionsRadios" id="optionsRadios"
+                                                                   value="option1">
+                                                            上架中
+                                                        </label>
+                                                    </div>
+                                                    <div class="form-check">
+                                                        <label class="form-check-label">
+                                                            <input type="radio" class="form-check-input"
+                                                                   name="optionsRadios" id="optionsRadios1"
+                                                                   value="option1">
+                                                            下架中
+                                                        </label>
+                                                    </div>
+                                                </div>
+                                            </div>
+
+
+                                        </div>
+                                    </div><!-- Col -->
+                                </div><!-- Row -->
+                            </div>
+                            <div class="col-sm-2 d-flex align-items-center justify-content-around">
+                                <button class="btn btn-primary" type="submit"><i data-feather="search"></i>搜索</button>
+                                <button class="btn  btn-secondary" type="reset"><i data-feather="rotate-cw"></i>重置
+                                </button>
+                            </div>
+                        </div>
+
+                    </form>
+
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="row py-4">
         <div class="col-md-12 grid-margin stretch-card">
             <div class="card">
                 <div class="card-body">
-                    <h6 class="card-title">分类列表</h6>
-                    <p class="card-description">Add class <code>.table-bordered</code></p>
+                    <h6 class="card-title">商品列表</h6>
                     <div class="table-responsive pt-3">
                         <table class="table table-bordered text-center">
                             <thead>
-                                <tr>
-                                    <th>
-                                        #
-                                    </th>
-                                    <th>
-                                        商品名称
-                                    </th>
-                                   
-                                    <th>
-                                        商品图片
-                                    </th>
-                                    <th>
-                                        商品价格
-                                    </th>
-                                    <th>是否上架</th>
-                                    <th>是否新品</th>
-                                    <th>是否热销</th>
-                                    <th>是否推荐</th>
-                                    <th>创建时间</th>
-                                    <th>操作</th>
-                                </tr>
+                            <tr>
+                                <th>
+                                    #
+                                </th>
+                                <th>
+                                    商品名称
+                                </th>
+
+                                <th>
+                                    商品图片
+                                </th>
+                                <th>
+                                    商品价格
+                                </th>
+                                <th>是否上架</th>
+                                <th>是否新品</th>
+                                <th>是否热销</th>
+                                <th>是否推荐</th>
+                                <th>创建时间</th>
+                                <th>操作</th>
+                            </tr>
                             </thead>
                             <tbody>
-                                @foreach ($products as $v)
-                                    <tr>
-                                        <td>
-                                            {{ $v->id }}
-                                        </td>
-                                        <td>
-                                            {{ $v->product_name }}
-                                        </td>
-                                        
-                                        <td>
-                                           <img src=" {{ $v->product_thumb }}" alt=" {{ $v->product_name }}" class="image-fluid">
-                                        </td>
-                                        <td>
-                                            {{ $v->product_price }}
-                                        </td>
-                                        <td>
-                                            @if ($v->product_status == 1)
-                                                {!! '<span class="badge badge-success">已上架</span>' !!}
-                                            @else
-                                                {!! '<span class="badge badge-secondary">下架中</span>' !!}
-                                            @endif
-                                        </td>
-                                        <td>
-                                            @if ($v->is_new == 1)
-                                                {!! '<span class="badge badge-success">是</span>' !!}
-                                            @else
-                                                {!! '<span class="badge badge-secondary">否</span>' !!}
-                                            @endif
-                                        </td>
-                                        <td>
-                                            @if ($v->is_hot == 1)
-                                                {!! '<span class="badge badge-success">热卖</span>' !!}
-                                            @else
-                                                {!! '<span class="badge badge-secondary">否</span>' !!}
-                                            @endif
-                                        </td>
-                                        <td>
-                                            @if ($v->is_recommend == 1)
-                                                {!! '<span class="badge badge-success">推荐中</span>' !!}
-                                            @else
-                                                {!! '<span class="badge badge-secondary">否</span>' !!}
-                                            @endif
-                                        </td>
-                                        <td>
-                                            {{ $v->created_at }}
-                                        </td>
+                            @foreach ($products as $v)
+                                <tr>
+                                    <td>
+                                        {{ $v->id }}
+                                    </td>
+                                    <td>
+                                        {{ $v->product_name }}
+                                    </td>
 
-                                        <td class="d-flex justify-content-center">
-                                            <a href="{{ route('product.edit', $v->id) }}"
-                                                class="btn btn-primary btn-icon-text mr-2 d-block">
+                                    <td>
+                                        <img src=" {{ $v->product_thumb }}" alt=" {{ $v->product_name }}"
+                                             class="image-fluid">
+                                    </td>
+                                    <td>
+                                        {{ $v->product_price }}
+                                    </td>
+                                    <td>
+                                        @if ($v->product_status == 1)
+                                            {!! '<span class="badge badge-success">已上架</span>' !!}
+                                        @else
+                                            {!! '<span class="badge badge-secondary">下架中</span>' !!}
+                                        @endif
+                                    </td>
+                                    <td>
+                                        @if ($v->is_new == 1)
+                                            {!! '<span class="badge badge-success">是</span>' !!}
+                                        @else
+                                            {!! '<span class="badge badge-secondary">否</span>' !!}
+                                        @endif
+                                    </td>
+                                    <td>
+                                        @if ($v->is_hot == 1)
+                                            {!! '<span class="badge badge-success">热卖</span>' !!}
+                                        @else
+                                            {!! '<span class="badge badge-secondary">否</span>' !!}
+                                        @endif
+                                    </td>
+                                    <td>
+                                        @if ($v->is_recommend == 1)
+                                            {!! '<span class="badge badge-success">推荐中</span>' !!}
+                                        @else
+                                            {!! '<span class="badge badge-secondary">否</span>' !!}
+                                        @endif
+                                    </td>
+                                    <td>
+                                        {{ $v->created_at }}
+                                    </td>
 
-                                                <i class="btn-icon-prepend" data-feather="check-square"></i>
-                                                编辑
+                                    <td class="d-flex justify-content-center">
+                                        <a href="{{ route('product.edit', $v->id) }}"
+                                           class="btn btn-primary btn-icon-text mr-2 d-block">
 
-                                            </a>
-                                          
-                                                <button type="submit" class="btn btn-danger btn-icon-text delete-product" data-id="{{ $v->id }}"
-                                                    data-name="{{ $v->cate_name }}">
-                                                    <i class="btn-icon-prepend" data-feather="trash"></i>
-                                                    删除
-                                                </button>
-                                          
+                                            <i class="btn-icon-prepend" data-feather="check-square"></i>
+                                            编辑
+
+                                        </a>
+
+                                        <button type="submit" class="btn btn-danger btn-icon-text delete-product"
+                                                data-id="{{ $v->id }}"
+                                                data-name="{{ $v->cate_name }}">
+                                            <i class="btn-icon-prepend" data-feather="trash"></i>
+                                            删除
+                                        </button>
 
 
-                                        </td>
-                                    </tr>
-                                @endforeach
+                                    </td>
+                                </tr>
+                            @endforeach
                             </tbody>
                         </table>
                     </div>
@@ -121,7 +256,7 @@
     <script src="{{ asset('backend/js/admin.js') }}"></script>
 
     <script>
-        $('.delete-cate').click(function() {
+        $('.delete-cate').click(function () {
             var $this = $(this);
             var name = $(this).data("name");
             var id = $(this).data("id");
@@ -140,13 +275,12 @@
                         type: "DELETE",
                         url: `/admin/product/${id}`,
                         dataType: "JSON",
-                        data:{
-                            '_token':'{{csrf_token()}}'
+                        data: {
+                            '_token': '{{csrf_token()}}'
                         },
-                        success: function(response) {
+                        success: function (response) {
                             if (response.code != 200) {
                                 Swal.fire(
-                                   
                                     response.msg,
                                     '',
                                     'error'
@@ -154,7 +288,6 @@
                                 return;
                             }
                             Swal.fire(
-                              
                                 response.msg,
                                 '',
                                 'success'

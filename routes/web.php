@@ -28,7 +28,7 @@ Route::resource('/products', 'Home\ProductController');
 Route::resource('/cart', 'Home\CartController');
 
 
-Route::prefix('admin')->group(function () {
+Route::prefix('/manager_admin_auth')->group(function () {
     Route::get('login', 'Admin\LoginController@showLoginForm')->name('admin.login');
     Route::post('login', 'Admin\LoginController@login');
     Route::get('register', 'Admin\RegisterController@showRegistrationForm')->name('admin.register');
