@@ -81,7 +81,7 @@
                                             <label class="control-label">发布时间</label>
                                             <div class="row">
                                                 <div class="col-6">
-                                                    <div class="input-group date datepicker" id="couponStart">
+                                                    <div class="input-group date datepicker" id="ProductStart">
                                                         <input type="text" class="form-control" name="not_before"
                                                                autocomplete="off"><span
                                                             class="input-group-addon"><i
@@ -90,7 +90,7 @@
                                                 </div>
 
                                                 <div class="col-6">
-                                                    <div class="input-group date datepicker" id="couponEnd">
+                                                    <div class="input-group date datepicker" id="ProductEnd">
                                                         <input type="text" class="form-control" name="not_after"
                                                                autocomplete="off"><span
                                                             class="input-group-addon"><i
@@ -252,53 +252,93 @@
     </div>
 
 @endsection
+@push('plugin-scripts')
+
+
+    <script src="{{ asset('backend/assets/plugins/bootstrap-datepicker/bootstrap-datepicker.min.js') }}"></script>
+@endpush
+
 @push('custom-scripts')
-    <script src="{{ asset('backend/js/admin.js') }}"></script>
+
+
+
+    <script src="{{ asset('backend/assets/js/datepicker.js') }}"></script>
 
     <script>
-        $('.delete-cate').click(function () {
-            var $this = $(this);
-            var name = $(this).data("name");
-            var id = $(this).data("id");
-            event.preventDefault();
-            Swal.fire({
-                title: `你确定要删除${name}?`,
-                text: "将无法复原",
-                icon: 'warning',
-                showCancelButton: true,
-                confirmButtonColor: '#3085d6',
-                cancelButtonColor: '#d33',
-                confirmButtonText: '是的,删除'
-            }).then((result) => {
-                if (result.isConfirmed) {
-                    $.ajax({
-                        type: "DELETE",
-                        url: `/admin/product/${id}`,
-                        dataType: "JSON",
-                        data: {
-                            '_token': '{{csrf_token()}}'
-                        },
-                        success: function (response) {
-                            if (response.code != 200) {
-                                Swal.fire(
-                                    response.msg,
-                                    '',
-                                    'error'
-                                )
-                                return;
-                            }
-                            Swal.fire(
-                                response.msg,
-                                '',
-                                'success'
-                            )
-                            $this.closest('tr').remove();
-
-                        }
-                    });
+        $(function() {
+            $('#ProductStart ,#ProductEnd').datepicker({
+                clearBtn: true,
+                language: "zh-CN",
+                calendarWeeks: true,
+                autoclose: true,
+                todayHighlight: true,
+                format: 'yyyy-mm-dd'
+            });
+            $('#type').on('change', function() {
+                if ($(this).val() === 'fixed') {
+                    $('.fixed').removeClass('d-none');
+                    $('.percent').addClass('d-none');
+                } else if ($(this).val() === 'percent') {
+                    $('.fixed').addClass('d-none');
+                    $('.percent').removeClass('d-none');
                 }
             })
-        });
+
+        })
+
 
     </script>
+
+
 @endpush
+
+{{--@push('custom-scripts')--}}
+{{--    <script src="{{ asset('backend/js/admin.js') }}"></script>--}}
+
+{{--    <script>--}}
+{{--        $('.delete-cate').click(function () {--}}
+{{--            var $this = $(this);--}}
+{{--            var name = $(this).data("name");--}}
+{{--            var id = $(this).data("id");--}}
+{{--            event.preventDefault();--}}
+{{--            Swal.fire({--}}
+{{--                title: `你确定要删除${name}?`,--}}
+{{--                text: "将无法复原",--}}
+{{--                icon: 'warning',--}}
+{{--                showCancelButton: true,--}}
+{{--                confirmButtonColor: '#3085d6',--}}
+{{--                cancelButtonColor: '#d33',--}}
+{{--                confirmButtonText: '是的,删除'--}}
+{{--            }).then((result) => {--}}
+{{--                if (result.isConfirmed) {--}}
+{{--                    $.ajax({--}}
+{{--                        type: "DELETE",--}}
+{{--                        url: `/admin/product/${id}`,--}}
+{{--                        dataType: "JSON",--}}
+{{--                        data: {--}}
+{{--                            '_token': '{{csrf_token()}}'--}}
+{{--                        },--}}
+{{--                        success: function (response) {--}}
+{{--                            if (response.code != 200) {--}}
+{{--                                Swal.fire(--}}
+{{--                                    response.msg,--}}
+{{--                                    '',--}}
+{{--                                    'error'--}}
+{{--                                )--}}
+{{--                                return;--}}
+{{--                            }--}}
+{{--                            Swal.fire(--}}
+{{--                                response.msg,--}}
+{{--                                '',--}}
+{{--                                'success'--}}
+{{--                            )--}}
+{{--                            $this.closest('tr').remove();--}}
+
+{{--                        }--}}
+{{--                    });--}}
+{{--                }--}}
+{{--            })--}}
+{{--        });--}}
+
+{{--    </script>--}}
+{{--@endpush--}}

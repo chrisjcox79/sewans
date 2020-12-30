@@ -44,6 +44,7 @@ Route::prefix('/manager_admin_auth')->group(function () {
     Route::resource('product','Admin\ProductController');
     Route::resource('attribute','Admin\AttributeController');
     Route::resource('users','Admin\UserController');
+    Route::get('/oss_upload_token','Admin\OssUploadController@ossUpload')->name('oss.upload');
 });
 
 
