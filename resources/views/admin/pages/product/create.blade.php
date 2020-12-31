@@ -717,6 +717,7 @@
             (function( $ ){
                 // 当domReady的时候开始初始化
                 $(function() {
+                    let imageArr = [];
                     var $wrap = $('#uploader'),
 
                         // 图片容器
@@ -873,11 +874,11 @@
                         server: 'https://sewans-upload.oss-cn-shanghai.aliyuncs.com',
                         // runtimeOrder: 'flash',
 
-                        // accept: {
-                        //     title: 'Images',
-                        //     extensions: 'gif,jpg,jpeg,bmp,png',
-                        //     mimeTypes: 'image/*'
-                        // },
+                        accept: {
+                            title: 'Images',
+                            extensions: 'gif,jpg,jpeg,bmp,png',
+                            mimeTypes: 'image/*'
+                        },
 
                         // 禁掉全局的拖拽功能。这样不会出现图片拖进页面的时候，把图片打开。
                         disableGlobalDnd: true,
@@ -885,6 +886,7 @@
                         fileSizeLimit: 200 * 1024 * 1024,    // 200 M
                         fileSingleSizeLimit: 50 * 1024 * 1024    // 50 M
                     });
+
                     uploader.on('uploadBeforeSend', function (obj, data, headers) {
 
 
@@ -898,12 +900,10 @@
                             success : function(res) {
 
                                 // var res = JSON.parse(obj2);
-                                    $res = JSON.parse(res)
-                                 console.log($res.policy);
-                                 console.log($res.accessid);
-                                 console.log($res.signature);
+                                    $res = JSON.parse(res);
+                                 imageArr.push(data.name);
                                 data = $.extend(data,{
-                                    'key' : 'product/product'+Math.random()+'.jpg',
+                                    'key' : `product/${data.name}`,
                                     'policy': $res.policy,
                                     'OSSAccessKeyId': $res.accessid,
                                     'success_action_status' : '200', //让服务端返回200,不然，默认会返回204
@@ -1247,6 +1247,7 @@
                     };
 
                     uploader.onFileQueued = function( file ) {
+
                         fileCount++;
                         fileSize += file.size;
 
@@ -1291,9 +1292,10 @@
                         }
                     });
                     uploader.on( 'uploadSuccess', function( file, response ) {
-                        if(response.code == 200){
-                            $('#wrapper').append('<input type="hidden" name="goods_images[]" value="'+response.data+'">');
-                        }
+
+
+                            $('#wrapper').append('<input type="hidden" name="goods_images[]" value="'+file.name+'">');
+
                     });
 
                     uploader.onError = function( code ) {
