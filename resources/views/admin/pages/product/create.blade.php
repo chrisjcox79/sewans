@@ -299,10 +299,10 @@
 
 
         <div class="row">
-            <div class="col-md-6 stretch-card grid-margin grid-margin-md-0">
+            <div class="col-12 stretch-card grid-margin grid-margin-md-0">
                 <div class="card">
                     <div class="card-body">
-                        <h6 class="card-title">Dropzone</h6>
+                        <h6 class="card-title">商品相册</h6>
                         <div id="wrapper">
                             <div id="container">
                                 <!--头部，相册选择和格式选择-->
@@ -329,10 +329,15 @@
                     </div>
                 </div>
             </div>
-            <div class="col-md-6 stretch-card">
+
+        </div>
+
+        <div class="row py-4">
+
+         <div class="col-md-6 stretch-card ">
                 <div class="card">
                     <div class="card-body">
-                        <h6 class="card-title">Dropify</h6>
+                        <h6 class="card-title">商品模型</h6>
                         <div class="form-group row">
                             <div class="col-lg-3">
                                 <label class="col-form-label">所属模型</label>
@@ -346,36 +351,51 @@
                                         @endforeach
                                     </select>
                                 </div>
+
+                            </div>
+                        </div>
+                        <div class="row d-none product-attr-row">
+                            <div class="col-12">
+                                <div class="py-3">
+                                    <div class="table-responsive pt-3">
+                                        <table class="table table-bordered text-center" id="product-attr-table">
+                                            <tbody class=" text-center">
+                                            </tbody>
+                                        </table>
+                                    </div>
+                                </div>
                             </div>
                         </div>
                     </div>
                 </div>
             </div>
-        </div>
-        <div class="row py-4">
-            <div class="col-md-12 grid-margin stretch-card">
+
+
+            <div class="col-md-6 stretch-card ">
                 <div class="card">
                     <div class="card-body">
-                        <h4 class="card-title">商品属性:</h4>
+                        <h6 class="card-title">商品规格相册</h6>
+                        <div class="form-group row">
+                            <div class="col-lg-3">
+                                <label class="col-form-label">商品规格相册</label>
+                            </div>
+                            <div class="col-lg-8">
+                                <div class="form-group">
+                                    <select class="form-control" id="goods_type_id" name="goods_type_id">
+                                        <option selected disabled>请选择商品模型</option>
+                                        @foreach ($types as $v)
+                                            <option value="{{ $v->id }}">{{ $v->type_name }}</option>
+                                        @endforeach
+                                    </select>
+                                </div>
 
-                        <div class="table-responsive pt-3">
-
-                            <table class="table table-bordered text-center" id="product-attr-table">
-
-
-                                <tbody class=" text-center">
-
-
-                                </tbody>
-                            </table>
+                            </div>
                         </div>
-                    </div>
 
+                    </div>
                 </div>
             </div>
-
         </div>
-
         <div class="row py-4">
             <div class="col-md-12 grid-margin stretch-card">
                 <div class="card">
@@ -506,6 +526,7 @@
 
         $("#goods_type_id").on('change', function () {
             type_id = $(this).val();
+            var sku_no = $("input[name=sku_code]").val();
             $.ajax({
                 type: "get",
                 url: "{{ route('type.getAttr') }}",
@@ -547,6 +568,7 @@
                     });
                     //将拼接好的html字符串，放到页面显示
                     $('#product-attr-table').find('tbody').html(spec_html);
+                    $(".product-attr-row").removeClass('d-none');
 
 
                     $('#product-attr-table').on('click', 'button', function () {
@@ -554,20 +576,22 @@
                         var spec_data = {};
                         $('.spec_name').find('button.btn-light').each(function (i, v) {
 
-                            var index = $(v).closest('tr').index();
-                            var spec_id = $(v).closest('tr').attr('spec_id');
-                            var data_color = $(v).data('color');
-                            var spec_name = $(v).closest('tr').find('td:first').attr(
+                            let index = $(v).closest('tr').index();
+                            let spec_id = $(v).closest('tr').attr('spec_id');
+                            let data_color = $(v).data('color');
+
+                           let spec_name = $(v).closest('tr').find('td:first').attr(
                                 'spec_name');
-                            var spec_value_id = $(v).attr('spec_value_id');
-                            var spec_value = $(v).text();
+                            let spec_value_id = $(v).attr('spec_value_id');
+                            let spec_value = $(v).text();
                             if (spec_data[index] == undefined) spec_data[index] = [];
                             spec_data[index].push({
                                 spec_id: spec_id,
                                 spec_name: spec_name,
                                 spec_value_id: spec_value_id,
                                 spec_value: spec_value,
-                                data_color: data_color
+                                data_color: data_color,
+
                             });
                         });
                         var spec_arr = [];
@@ -607,8 +631,8 @@
                         html += '<td><b>购买价</b></td>';
                         html += '<td><b>成本价</b></td>';
                         html += '<td><b>库存</b></td>';
-                        html += '<td><b>图片</b></td>';
-                        html +=
+                        html += '<td><b>SKU编号</b></td>';
+                      html +=
                             '<td style="text-align: center; font-size: 14px;"><b>操作</b></td>';
                         html += '</tr>';
                         //拼接批量填充行
@@ -638,17 +662,19 @@
                             if ($.isArray(v) == false) {
                                 var value_ids = v.spec_value_id;
                                 var value_names = v.spec_name + ':' + v.spec_value;
+                                let sku_code = v.spec_value;
                                 html += '<td >' + v.spec_value + '</td>';
                             } else {
                                 var value_ids = '';
                                 var value_names = '';
                                 $.each(v, function (i2, v2) {
-                                    console.log(v2);
+
                                     html += '<td style="color:' + v2.data_color + '">' + v2.spec_value + '</td>';
                                     value_ids += v2.spec_value_id + '_';
                                     value_names += v2.spec_name + ':' + v2
                                             .spec_value +
                                         ' ';
+                                    sku_code += '-'+v2.spec_value;
                                 });
                                 value_ids = value_ids.slice(0, -1);
                                 value_names = value_names.slice(0, -1);
@@ -672,7 +698,7 @@
                             html +=
                                 '<td><input class="form-control" name="item[' +
                                 value_ids +
-                                '][file][]"  type="file"></td>';
+                                '][sku_no][]"  type="text" value="'+sku_no+'-'+sku_code+'"></td>';
                             html +=
                                 '<td ><i class="fa fa-trash delete-item" style="font-size: 20px; cursor:pointer"></i></td>';
 
@@ -892,7 +918,7 @@
 
                         // expire 过期才去获取下面的信息
                         $.ajax({
-                            type : "GET",
+                            type : "POST",
                             url : "{{route('oss.upload')}}",
                             timeout : 10000,
                             dataType:"JSON",
@@ -1041,7 +1067,7 @@
 
                             // 成功
                             if ( cur === 'error' || cur === 'invalid' ) {
-                                console.log( file.statusText );
+                               // console.log( file.statusText );
                                 showError( file.statusText );
                                 percentages[ file.id ][ 1 ] = 1;
                             } else if ( cur === 'interrupt' ) {
