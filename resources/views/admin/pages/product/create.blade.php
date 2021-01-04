@@ -41,14 +41,14 @@
                                     <div class="form-group">
                                         <label for="name">商品名称</label>
                                         <input  class="form-control" name="product_name" type="text" autocomplete="off"
-                                               value="{{ old('product_name') }}">
+                                                value="{{ old('product_name') }}">
                                     </div>
                                 </div>
                                 <div class="col-sm-6">
                                     <div class="form-group">
                                         <label for="name">商品价格</label>
                                         <input  class="form-control" name="product_price" type="number" autocomplete="off"
-                                               value="{{ old('product_price') }}">
+                                                value="{{ old('product_price') }}">
                                     </div>
                                 </div>
                             </div>
@@ -59,7 +59,7 @@
                                     <div class="form-group">
                                         <label for="name">市场价格</label>
                                         <input  class="form-control" name="market_price" type="number" autocomplete="off"
-                                               value="{{ old('market_price') }}">
+                                                value="{{ old('market_price') }}">
                                     </div>
                                 </div>
                                 <div class="col-sm-6">
@@ -81,7 +81,7 @@
                                         </div>
                                         <input  class="form-control" name="product_code" type="text"
                                                 autocomplete="off"
-                                               value="{{ old('product_code') }}">
+                                                value="{{ old('product_code') }}">
 
                                     </div>
                                 </div>
@@ -334,7 +334,7 @@
 
         <div class="row py-4">
 
-         <div class="col-md-6 stretch-card ">
+            <div class="col-md-6 stretch-card ">
                 <div class="card">
                     <div class="card-body">
                         <h6 class="card-title">商品模型</h6>
@@ -580,7 +580,7 @@
                             let spec_id = $(v).closest('tr').attr('spec_id');
                             let data_color = $(v).data('color');
 
-                           let spec_name = $(v).closest('tr').find('td:first').attr(
+                            let spec_name = $(v).closest('tr').find('td:first').attr(
                                 'spec_name');
                             let spec_value_id = $(v).attr('spec_value_id');
                             let spec_value = $(v).text();
@@ -632,7 +632,7 @@
                         html += '<td><b>成本价</b></td>';
                         html += '<td><b>库存</b></td>';
                         html += '<td><b>SKU编号</b></td>';
-                      html +=
+                        html +=
                             '<td style="text-align: center; font-size: 14px;"><b>操作</b></td>';
                         html += '</tr>';
                         //拼接批量填充行
@@ -656,13 +656,13 @@
                         html += '</tr>';
                         //继续拼接
                         $.each(result, function (i, v) {
-
+                            let sku_code ='';
                             html +=
                                 '<tr style="text-align: center;"class="spec_table">';
                             if ($.isArray(v) == false) {
                                 var value_ids = v.spec_value_id;
                                 var value_names = v.spec_name + ':' + v.spec_value;
-                                let sku_code = v.spec_value;
+                                sku_code += v.spec_value;
                                 html += '<td >' + v.spec_value + '</td>';
                             } else {
                                 var value_ids = '';
@@ -698,7 +698,7 @@
                             html +=
                                 '<td><input class="form-control" name="item[' +
                                 value_ids +
-                                '][sku_no][]"  type="text" value="'+sku_no+'-'+sku_code+'"></td>';
+                                '][sku_no][]"  type="text" value="'+sku_no+sku_code+'"></td>';
                             html +=
                                 '<td ><i class="fa fa-trash delete-item" style="font-size: 20px; cursor:pointer"></i></td>';
 
@@ -735,7 +735,7 @@
             $(document).on('click', "#product_code_generate", function () {
                 let $code = String(Math.random()).substring(2,15);
 
-                   $("input[name=product_code]").val($code);
+                $("input[name=product_code]").val($code);
 
 
 
@@ -926,8 +926,8 @@
                             success : function(res) {
 
                                 // var res = JSON.parse(obj2);
-                                    $res = JSON.parse(res);
-                                 imageArr.push(data.name);
+                                $res = JSON.parse(res);
+                                imageArr.push(data.name);
                                 data = $.extend(data,{
                                     'key' : `product/${data.name}`,
                                     'policy': $res.policy,
@@ -1067,7 +1067,7 @@
 
                             // 成功
                             if ( cur === 'error' || cur === 'invalid' ) {
-                               // console.log( file.statusText );
+                                // console.log( file.statusText );
                                 showError( file.statusText );
                                 percentages[ file.id ][ 1 ] = 1;
                             } else if ( cur === 'interrupt' ) {
@@ -1320,7 +1320,7 @@
                     uploader.on( 'uploadSuccess', function( file, response ) {
 
 
-                            $('#wrapper').append('<input type="hidden" name="goods_images[]" value="'+file.name+'">');
+                        $('#wrapper').append('<input type="hidden" name="goods_images[]" value="'+file.name+'">');
 
                     });
 
