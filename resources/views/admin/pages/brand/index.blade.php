@@ -14,7 +14,6 @@
             <div class="card">
                 <div class="card-body">
                     <h6 class="card-title">品牌列表</h6>
-                    <p class="card-description">Add class <code>.table-bordered</code></p>
                     <div class="table-responsive pt-3">
                         <table class="table table-bordered">
                             <thead>
@@ -47,7 +46,7 @@
                                             {{ $v->brand_name }}
                                         </td>
                                         <td>
-                                            <img src="{{ config('app.url') . '/' . $v->logo }}" alt="{{ $v->brand_name }}"
+                                            <img src="{{$v->logo }}" alt="{{ $v->brand_name }}"
                                                 class="image-fluid">
                                         </td>
                                         <td>

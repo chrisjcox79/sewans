@@ -151,7 +151,7 @@
                             </div>
                             <div class="col-lg-8">
                                 <div class="form-group">
-                                    <select class="form-control" id="cate_3">
+                                    <select class="form-control" id="cate_3" name="category_id">
                                         <option selected disabled>请选择三级分类</option>
 
                                     </select>
@@ -265,27 +265,7 @@
                 </div>
             </div>
         </div>
-        <div class="row">
-            <div class="col-md-6 grid-margin stretch-card">
-                <div class="card">
-                    <div class="card-body">
-                        <h6 class="card-title">商品关键字(用于搜索):</h6>
-                        <div>
-                            <input name="keyword" id="tags" value="New York,Texas,Florida,New Mexico"/>
-                        </div>
-                    </div>
-                </div>
-            </div>
-            <div class="col-md-6 grid-margin stretch-card">
-                <div class="card">
-                    <div class="card-body">
-                        <h6 class="card-title">商品封面图</h6>
-                        <input type="file" id="product_thumb" class="border" name="product_thumb"
-                               data-allowed-file-extensions="gif png jpg jpeg svg" data-max-file-size-preview="5M"/>
-                    </div>
-                </div>
-            </div>
-        </div>
+
         <div class="row">
             <div class="col-md-12 grid-margin stretch-card">
                 <div class="card">
@@ -371,27 +351,13 @@
             </div>
 
 
-            <div class="col-md-6 stretch-card ">
+            <div class="col-md-6  stretch-card">
                 <div class="card">
                     <div class="card-body">
-                        <h6 class="card-title">商品规格相册</h6>
-                        <div class="form-group row">
-                            <div class="col-lg-3">
-                                <label class="col-form-label">商品规格相册</label>
-                            </div>
-                            <div class="col-lg-8">
-                                <div class="form-group">
-                                    <select class="form-control" id="goods_type_id" name="goods_type_id">
-                                        <option selected disabled>请选择商品模型</option>
-                                        @foreach ($types as $v)
-                                            <option value="{{ $v->id }}">{{ $v->type_name }}</option>
-                                        @endforeach
-                                    </select>
-                                </div>
-
-                            </div>
+                        <h6 class="card-title">商品关键字(用于搜索):</h6>
+                        <div>
+                            <input name="keywords" id="tags" value=""/>
                         </div>
-
                     </div>
                 </div>
             </div>
@@ -429,42 +395,27 @@
 @endsection
 
 @push('plugin-scripts')
-    <script src="{{ asset('backend/assets/plugins/jquery-validation/jquery.validate.min.js') }}"></script>
-    <script src="{{ asset('backend/assets/plugins/bootstrap-maxlength/bootstrap-maxlength.min.js') }}"></script>
-    <script src="{{ asset('backend/assets/plugins/inputmask/jquery.inputmask.bundle.min.js') }}"></script>
-    <script src="{{ asset('backend/assets/plugins/select2/select2.min.js') }}"></script>
-    <script src="{{ asset('backend/assets/plugins/typeahead-js/typeahead.bundle.min.js') }}"></script>
+
     <script src="{{ asset('backend/assets/plugins/jquery-tags-input/jquery.tagsinput.min.js') }}"></script>
-    <script src="{{ asset('backend/assets/plugins/dropzone/dropzone.min.js') }}"></script>
     <script src="{{ asset('backend/assets/plugins/dropify/js/dropify.min.js') }}"></script>
-    <script src="{{ asset('backend/assets/plugins/bootstrap-colorpicker/bootstrap-colorpicker.min.js') }}"></script>
-    <script src="{{ asset('backend/assets/plugins/bootstrap-datepicker/bootstrap-datepicker.min.js') }}"></script>
-    <script src="{{ asset('backend/assets/plugins/moment/moment.min.js') }}"></script>
-    <script src="{{ asset('backend/assets/plugins/tempusdominus-bootstrap-4/tempusdominus-bootstrap-4.js') }}"></script>
     <script src="{{ asset('backend/assets/plugins/tinymce/tinymce.min.js') }}"></script>
-    <script src="https://cdn.jsdelivr.net/gh/gitbrent/bootstrap4-toggle@3.6.1/js/bootstrap4-toggle.min.js"></script>
+
 
 
 @endpush
 
 @push('custom-scripts')
-    <script src="{{ asset('backend/assets/js/form-validation.js') }}"></script>
-    <script src="{{ asset('backend/assets/js/bootstrap-maxlength.js') }}"></script>
-    <script src="{{ asset('backend/assets/js/inputmask.js') }}"></script>
-    <script src="{{ asset('backend/assets/js/select2.js') }}"></script>
+
     <script src="{{ asset('backend/assets/js/tinymce.js') }}"></script>
-    <script src="{{ asset('backend/assets/js/typeahead.js') }}"></script>
     <script src="{{ asset('backend/assets/js/tags-input.js') }}"></script>
-    <script src="{{ asset('backend/assets/js/dropzone.js') }}"></script>
     <script src="{{ asset('backend/assets/js/dropify.js') }}"></script>
-    <script src="{{ asset('backend/assets/js/bootstrap-colorpicker.js') }}"></script>
-    <script src="{{ asset('backend/assets/js/datepicker.js') }}"></script>
-    <script src="{{ asset('backend/assets/js/timepicker.js') }}"></script>
     <script src="{{ asset('backend/assets/js/webuploader.min.js') }}"></script>
     <script src="{{ asset('backend/assets/js/webupload.js') }}"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/blueimp-md5/2.18.0/js/md5.min.js" integrity="sha512-Hmp6qDy9imQmd15Ds1WQJ3uoyGCUz5myyr5ijainC1z+tP7wuXcze5ZZR3dF7+rkRALfNy7jcfgS5hH8wJ/2dQ==" crossorigin="anonymous"></script>
     <script>
         $(function () {
-            $("#cate_1").on('change', function () {
+
+                $("#cate_1").on('change', function () {
                 let pid = $(this).val();
 
                 $.ajax({
@@ -631,6 +582,7 @@
                         html += '<td><b>购买价</b></td>';
                         html += '<td><b>成本价</b></td>';
                         html += '<td><b>库存</b></td>';
+                        html += '<td><b>库存预警</b></td>';
                         html += '<td><b>SKU编号</b></td>';
                         html +=
                             '<td style="text-align: center; font-size: 14px;"><b>操作</b></td>';
@@ -650,17 +602,19 @@
                             '<td><input id="item_cost_price" value="0" class="form-control"></td>';
                         html +=
                             '<td><input id="item_store_count" value="0" class="form-control"></td>';
-                        html += '<td></td>';
+                        html +=
+                            '<td><input id="item_store_alert" value="0" class="form-control"></td>';
                         html +=
                             '<td style="text-align:center;"><button id="item_fill" type="button" class="btn-primary btn" >批量填充</button></td>';
                         html += '</tr>';
                         //继续拼接
                         $.each(result, function (i, v) {
                             let sku_code ='';
+                            let goods_value_id =  $("input[name=product_code]").val();
                             html +=
                                 '<tr style="text-align: center;"class="spec_table">';
                             if ($.isArray(v) == false) {
-                                var value_ids = v.spec_value_id;
+                                var value_ids = goods_value_id+v.spec_value_id;
                                 var value_names = v.spec_name + ':' + v.spec_value;
                                 sku_code += v.spec_value;
                                 html += '<td >' + v.spec_value + '</td>';
@@ -670,7 +624,7 @@
                                 $.each(v, function (i2, v2) {
 
                                     html += '<td style="color:' + v2.data_color + '">' + v2.spec_value + '</td>';
-                                    value_ids += v2.spec_value_id + '_';
+                                    value_ids += goods_value_id+v2.spec_value_id + '_';
                                     value_names += v2.spec_name + ':' + v2
                                             .spec_value +
                                         ' ';
@@ -696,9 +650,13 @@
                                 value_ids +
                                 '][store_count]" value="0"></td>';
                             html +=
+                                '<td><input class="item_store_alert form-control" name="item[' +
+                                value_ids +
+                                '][store_alert]" value="0"></td>';
+                            html +=
                                 '<td><input class="form-control" name="item[' +
                                 value_ids +
-                                '][sku_no][]"  type="text" value="'+sku_no+sku_code+'"></td>';
+                                '][sku_no]"  type="text" value="'+sku_no+sku_code+'"></td>';
                             html +=
                                 '<td ><i class="fa fa-trash delete-item" style="font-size: 20px; cursor:pointer"></i></td>';
 
@@ -717,9 +675,11 @@
                 var item_price = $('#item_price').val();
                 var item_cost_price = $('#item_cost_price').val();
                 var item_store_count = $('#item_store_count').val();
+                var item_store_alert = $('#item_store_alert').val();
                 $('.item_price').val(item_price);
                 $('.item_cost_price').val(item_cost_price);
                 $('.item_store_count').val(item_store_count);
+                $('.item_store_alert').val(item_store_alert);
 
             });
             $(document).on('click', '.delete-item', function () {
@@ -926,10 +886,12 @@
                             success : function(res) {
 
                                 // var res = JSON.parse(obj2);
-                                $res = JSON.parse(res);
-                                imageArr.push(data.name);
+                                let $res = JSON.parse(res);
+                                let suffix = data.name.split('.').pop();
+                                let imgName = md5(data.name)+'.'+suffix;
+                                imageArr.push(imgName);
                                 data = $.extend(data,{
-                                    'key' : `product/${data.name}`,
+                                    'key' : `product/${imgName}`,
                                     'policy': $res.policy,
                                     'OSSAccessKeyId': $res.accessid,
                                     'success_action_status' : '200', //让服务端返回200,不然，默认会返回204
@@ -1318,9 +1280,12 @@
                         }
                     });
                     uploader.on( 'uploadSuccess', function( file, response ) {
+                        let newImageArr = [...new Set(imageArr)];
+                        console.log(newImageArr);
+                      $.each(newImageArr,function (i,v) {
+                          $('#wrapper').append('<input type="hidden" name="goods_images[]" value="'+v+'">');
+                      })
 
-
-                        $('#wrapper').append('<input type="hidden" name="goods_images[]" value="'+file.name+'">');
 
                     });
 

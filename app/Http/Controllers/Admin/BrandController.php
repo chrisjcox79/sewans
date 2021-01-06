@@ -56,13 +56,9 @@ class BrandController extends AdminController
 
 
         $data = $brandFormRequest->validated();
-        $path = $brandFormRequest->file('logo') ->store(
-            'uploads/brand/logo/' . date("Y-m-d", time()),['disk'=>'logo']
-          );
-        $img = Image::make($path)->resize(400,300);
-
-        $img->save( $path );
-        $data['logo']= $path;
+        $disk = Storage::disk('oss');
+        $path = $disk->put('/product_brand', $brandFormRequest->logo);
+        $data['logo']= $disk->url($path);
         $res = Brands::create($data);
         if($res){
             session()->flash('success','添加成功');
@@ -111,14 +107,9 @@ class BrandController extends AdminController
 
         $data =  $request->validated();
         if( $request->hasfile('logo')){
-            $path =  $request->file('logo') ->store(
-                'uploads/brand/logo/' . date("Y-m-d", time()),['disk'=>'logo']
-              );
-            $img = Image::make($path)->resize(400,300);
-
-            $img->save( $path );
-            $data['logo']= $path;
-            File::delete($data['old_logo']);
+            $disk = Storage::disk('oss');
+            $path = $disk->put('/product_brand', $request->logo);
+            $data['logo']= $disk->url($path);
         }
         unset($data['old_logo']);
 

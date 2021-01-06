@@ -3,7 +3,7 @@
 @push('plugin-styles')
 
   <link href="{{ asset('backend/assets/plugins/dropify/css/dropify.min.css') }}" rel="stylesheet" />
-  
+
 @endpush
 
 @section('content')
@@ -50,12 +50,12 @@
                                             否
                                             <i class="input-frame"></i></label>
                                     </div>
-    
+
                                 </div>
                             </div>
-    
 
-                           
+
+
                         </fieldset>
 
                     </div>
@@ -65,7 +65,7 @@
                 <div class="card">
                     <div class="card-body">
 
-                        <input type="file" id="brand-logo" class="border" data-allowed-file-extensions="gif png jpg jpeg svg" data-max-file-size-preview="3M" name="logo" data-default-file="{{ config('app.url') . '/' . $brand->logo }}"/>
+                        <input type="file" id="brand-logo" class="border" data-allowed-file-extensions="gif png jpg jpeg svg" data-max-file-size-preview="3M" name="logo" data-default-file="{{$brand->logo }}"/>
 
                         <input class="form-control" type="hidden" name="old_logo" value="{{$brand->logo}}">
                         <input class="btn btn-primary py-2 float-right mt-5" type="submit" value="更新">
