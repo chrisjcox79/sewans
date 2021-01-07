@@ -194,8 +194,8 @@
                                     <td>
 
                                         <div class="custom-control custom-switch">
-                                            <input type="checkbox" class="custom-control-input changProductStatus" id="customSwitch1" data-url= {{route('updateProductStatus',$v)}} {{$v->status == 1?'checked':''}}>
-                                            <label class="custom-control-label" for="customSwitch1">
+                                            <input type="checkbox" class="custom-control-input changProductStatus" id="image-status-{{$v->product_code}}" data-url= {{route('updateProductStatus',$v)}} {{$v->status == 1?'checked':''}}>
+                                            <label class="custom-control-label" for="image-status-{{$v->product_code}}">
                                                 @if ($v->status == 1)
                                                     {!! '<span class="badge badge-success">已上架</span>' !!}
                                                 @else

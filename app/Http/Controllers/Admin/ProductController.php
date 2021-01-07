@@ -57,14 +57,12 @@ class ProductController extends AdminController
 
         DB::beginTransaction();
         try {
-            $disk = Storage::disk('oss');
-            $path = $disk->put('/product', $data["product_thumb"]);
-            $data["product_thumb"] = $disk->url($path) . '?x-oss-process=image/resize,m_fixed,h_350,w_270';
 
+            $data["product_thumb"] = getenv('OSS_BUCKET_URL').'/'.$data["product_thumb"] . '?x-oss-process=image/resize,m_fixed,h_350,w_270';
             $product = Product::create($data);
             foreach ($data['goods_images'] as $img) {
-                $small_img = getenv('OSS_BUCKET_URL') . '/product/' . $img . '?x-oss-process=image/resize,m_fixed,h_350,w_270';
-                $big_img = getenv('OSS_BUCKET_URL') . '/product/' . $img . '?x-oss-process=image/resize,m_fixed,h_625,w_485';
+                $small_img = getenv('OSS_BUCKET_URL')  .'/'. $img . '?x-oss-process=image/resize,m_fixed,h_350,w_270';
+                $big_img = getenv('OSS_BUCKET_URL') . '/'.$img . '?x-oss-process=image/resize,m_fixed,h_625,w_485';
                 $row = [
                     'product_id' => $product->id,
                     'small_img' => $small_img,
@@ -85,7 +83,7 @@ class ProductController extends AdminController
 
 
             DB::rollBack();
-            dd($e->getMessage());
+
             session()->flash('danger', '商品添加失败');
             //return redirect()->back();
         }
