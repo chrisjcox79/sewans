@@ -4,7 +4,7 @@ use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
-class AddProductStoreAlertToProductTable extends Migration
+class AlterProductContentToProductTable extends Migration
 {
     /**
      * Run the migrations.
@@ -15,7 +15,7 @@ class AddProductStoreAlertToProductTable extends Migration
     {
         Schema::table('products', function (Blueprint $table) {
             //
-            $table->integer('product_store_alert');
+            $table->string('product_content')->after('product_thumb')->comment('商品详情内容');
         });
     }
 

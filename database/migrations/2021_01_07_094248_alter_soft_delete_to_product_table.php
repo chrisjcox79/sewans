@@ -4,7 +4,7 @@ use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
-class AddTokenToAdminTable extends Migration
+class AlterSoftDeleteToProductTable extends Migration
 {
     /**
      * Run the migrations.
@@ -13,9 +13,9 @@ class AddTokenToAdminTable extends Migration
      */
     public function up()
     {
-        Schema::table('admins', function (Blueprint $table) {
+        Schema::table('products', function (Blueprint $table) {
             //
-            $table->rememberToken();
+            $table->softDeletes();
         });
     }
 
@@ -26,7 +26,7 @@ class AddTokenToAdminTable extends Migration
      */
     public function down()
     {
-        Schema::table('admins', function (Blueprint $table) {
+        Schema::table('products', function (Blueprint $table) {
             //
         });
     }

@@ -186,17 +186,24 @@
 
                                     <td>
                                         <img src=" {{ $v->product_thumb }}" alt=" {{ $v->product_name }}"
-                                             class="image-fluid">
+                                             class="image-fluid" style="width: 85px;height: 110px">
                                     </td>
                                     <td>
                                         {{ $v->product_price }}
                                     </td>
                                     <td>
-                                        @if ($v->product_status == 1)
-                                            {!! '<span class="badge badge-success">已上架</span>' !!}
-                                        @else
-                                            {!! '<span class="badge badge-secondary">下架中</span>' !!}
-                                        @endif
+
+                                        <div class="custom-control custom-switch">
+                                            <input type="checkbox" class="custom-control-input changProductStatus" id="customSwitch1" data-url= {{route('updateProductStatus',$v)}} {{$v->status == 1?'checked':''}}>
+                                            <label class="custom-control-label" for="customSwitch1">
+                                                @if ($v->status == 1)
+                                                    {!! '<span class="badge badge-success">已上架</span>' !!}
+                                                @else
+                                                    {!! '<span class="badge badge-secondary">下架中</span>' !!}
+                                                @endif
+
+                                            </label>
+                                        </div>
                                     </td>
                                     <td>
                                         @if ($v->is_new == 1)
@@ -223,21 +230,18 @@
                                         {{ $v->created_at }}
                                     </td>
 
-                                    <td class="d-flex justify-content-center">
+                                    <td class="">
                                         <a href="{{ route('product.edit', $v->id) }}"
-                                           class="btn btn-primary btn-icon-text mr-2 d-block">
+                                           class="badge badge-light">
 
                                             <i class="btn-icon-prepend" data-feather="check-square"></i>
                                             编辑
 
                                         </a>
-
-                                        <button type="submit" class="btn btn-danger btn-icon-text delete-product"
-                                                data-id="{{ $v->id }}"
-                                                data-name="{{ $v->cate_name }}">
-                                            <i class="btn-icon-prepend" data-feather="trash"></i>
-                                            删除
-                                        </button>
+                                        <a class="badge badge-secondary delete-product" data-id="{{ $v->id }}" data-url="{{route( 'product.destroy',$v)}}"
+                                           data-name="{{ $v->product_name }}"> <i class="btn-icon-prepend"
+                                                                                  data-feather="trash"></i>
+                                            删除</a>
 
 
                                     </td>
@@ -265,7 +269,7 @@
     <script src="{{ asset('backend/assets/js/datepicker.js') }}"></script>
 
     <script>
-        $(function() {
+        $(function () {
             $('#ProductStart ,#ProductEnd').datepicker({
                 clearBtn: true,
                 language: "zh-CN",
@@ -274,7 +278,7 @@
                 todayHighlight: true,
                 format: 'yyyy-mm-dd'
             });
-            $('#type').on('change', function() {
+            $('#type').on('change', function () {
                 if ($(this).val() === 'fixed') {
                     $('.fixed').removeClass('d-none');
                     $('.percent').addClass('d-none');
@@ -292,53 +296,88 @@
 
 @endpush
 
-{{--@push('custom-scripts')--}}
-{{--    <script src="{{ asset('backend/js/admin.js') }}"></script>--}}
+@push('custom-scripts')
+    <script src="{{ asset('backend/js/admin.js') }}"></script>
 
-{{--    <script>--}}
-{{--        $('.delete-cate').click(function () {--}}
-{{--            var $this = $(this);--}}
-{{--            var name = $(this).data("name");--}}
-{{--            var id = $(this).data("id");--}}
-{{--            event.preventDefault();--}}
-{{--            Swal.fire({--}}
-{{--                title: `你确定要删除${name}?`,--}}
-{{--                text: "将无法复原",--}}
-{{--                icon: 'warning',--}}
-{{--                showCancelButton: true,--}}
-{{--                confirmButtonColor: '#3085d6',--}}
-{{--                cancelButtonColor: '#d33',--}}
-{{--                confirmButtonText: '是的,删除'--}}
-{{--            }).then((result) => {--}}
-{{--                if (result.isConfirmed) {--}}
-{{--                    $.ajax({--}}
-{{--                        type: "DELETE",--}}
-{{--                        url: `/admin/product/${id}`,--}}
-{{--                        dataType: "JSON",--}}
-{{--                        data: {--}}
-{{--                            '_token': '{{csrf_token()}}'--}}
-{{--                        },--}}
-{{--                        success: function (response) {--}}
-{{--                            if (response.code != 200) {--}}
-{{--                                Swal.fire(--}}
-{{--                                    response.msg,--}}
-{{--                                    '',--}}
-{{--                                    'error'--}}
-{{--                                )--}}
-{{--                                return;--}}
-{{--                            }--}}
-{{--                            Swal.fire(--}}
-{{--                                response.msg,--}}
-{{--                                '',--}}
-{{--                                'success'--}}
-{{--                            )--}}
-{{--                            $this.closest('tr').remove();--}}
+    <script>
+        $('.delete-product').click(function () {
+            var $this = $(this);
+            var name = $(this).data("name");
+            var id = $(this).data("id");
+            let url = $(this).data("url");
+            event.preventDefault();
+            Swal.fire({
+                title: `你确定要删除${name}?`,
+                text: "将无法复原",
+                icon: 'warning',
+                showCancelButton: true,
+                confirmButtonColor: '#3085d6',
+                cancelButtonColor: '#d33',
+                confirmButtonText: '是的,删除'
+            }).then((result) => {
+                if (result.isConfirmed) {
+                    $.ajax({
+                        type: "DELETE",
+                        url: url,
+                        dataType: "JSON",
+                        data: {
+                            '_token': '{{csrf_token()}}'
+                        },
+                        success: function (response) {
+                            if (response.code != 200) {
+                                Swal.fire(
+                                    response.msg,
+                                    '',
+                                    'error'
+                                )
+                                return;
+                            }
+                            Swal.fire(
+                                response.msg,
+                                '',
+                                'success'
+                            )
+                            $this.closest('tr').remove();
 
-{{--                        }--}}
-{{--                    });--}}
-{{--                }--}}
-{{--            })--}}
-{{--        });--}}
+                        }
+                    });
+                }
+            })
+        });
+        $('.changProductStatus').change(function () {
+            var $this = $(this);
+            var name = $(this).data("name");
+            var id = $(this).data("id");
+            let url = $(this).data("url");
+            event.preventDefault();
+            $.ajax({
+                type: "PATCH",
+                url: url,
+                dataType: "JSON",
+                data: {
+                    '_token': '{{csrf_token()}}'
+                },
+                success: function (response) {
+                    if (response.code != 200) {
+                        Swal.fire(
+                            response.msg,
+                            '',
+                            'error'
+                        )
+                        return;
+                    }
+                    Swal.fire(
+                        response.msg,
+                        '',
+                        'success'
+                    )
+                    let sign = response.msg == '已上架'?'success':'secondary';
+                    $(".custom-control-label").html(`<span class="badge badge-${sign}">${response.msg}</span>`);
 
-{{--    </script>--}}
-{{--@endpush--}}
+
+                }
+            });
+        });
+
+    </script>
+@endpush

@@ -8,10 +8,12 @@ use App\Http\Requests\StoreProductForm;
 use App\Models\Brands;
 use App\Models\Product;
 use App\Models\ProductImages;
+use App\Models\ProductSpec;
 use Illuminate\Http\Request;
 use App\Models\Category;
 use App\Models\GoodsType;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Storage;
 
 class ProductController extends AdminController
 {
@@ -52,16 +54,17 @@ class ProductController extends AdminController
     {
         //
         $data = $request->all();
+
         DB::beginTransaction();
         try {
             $disk = Storage::disk('oss');
-            $path = $disk->put('/product', $data->product_thumb);
+            $path = $disk->put('/product', $data["product_thumb"]);
             $data["product_thumb"] = $disk->url($path) . '?x-oss-process=image/resize,m_fixed,h_350,w_270';
-            $product = Product::create($data);
 
-            foreach (array_values(array_unique($data['goods_images'])) as $img) {
-                $small_img = getenv('OSS_BUCKET_URL') . '/' . $img . '?x-oss-process=image/resize,m_fixed,h_350,w_270';
-                $big_img = getenv('OSS_BUCKET_URL') . '/' . $img . '?x-oss-process=image/resize,m_fixed,h_625,w_485';
+            $product = Product::create($data);
+            foreach ($data['goods_images'] as $img) {
+                $small_img = getenv('OSS_BUCKET_URL') . '/product/' . $img . '?x-oss-process=image/resize,m_fixed,h_350,w_270';
+                $big_img = getenv('OSS_BUCKET_URL') . '/product/' . $img . '?x-oss-process=image/resize,m_fixed,h_625,w_485';
                 $row = [
                     'product_id' => $product->id,
                     'small_img' => $small_img,
@@ -69,18 +72,23 @@ class ProductController extends AdminController
                 ];
                 ProductImages::create($row);
 
-                DB::commit();
-                session()->flash('success', '商品添加成功');
-                return redirect()->route('products.index');
             }
-        }catch (\Exception $e){
+
+            foreach ($data['item'] as $item) {
+                $item['product_id'] = $product->id;
+                ProductSpec::create($item);
+            }
+            DB::commit();
+            session()->flash('success', '商品添加成功');
+            return redirect()->route('products.index');
+        } catch (Exception $e) {
 
 
             DB::rollBack();
-            session()->flash('danger','商品添加失败');
-            return redirect()->back();
+            dd($e->getMessage());
+            session()->flash('danger', '商品添加失败');
+            //return redirect()->back();
         }
-
 
 
     }
@@ -102,11 +110,20 @@ class ProductController extends AdminController
      * @param int $id
      * @return \Illuminate\Http\Response
      */
-    public function edit($id)
+    public function edit(Product $product)
     {
         //
 
-        return view('admin.pages.product.edit');
+        $data = Product::with('brands', 'productImages', 'productSpec', 'category')->find($product->id);
+
+        $pid_path = explode('_',$data->category->pid_path);
+        $category_one = Category::where('pid', 0)->get();
+        $category_two = Category::where('pid', $pid_path[1])->get();
+        $category_three = Category::where('pid', $pid_path[2])->get();
+        $brands = Brands::all();
+        $types = GoodsType::where('status', 1)->get();
+
+        return view('admin.pages.product.edit',compact('data','category_one','category_two','category_three','brands','types'));
 
     }
 
@@ -131,5 +148,36 @@ class ProductController extends AdminController
     public function destroy($id)
     {
         //
+        $data = Product::find($id);
+        if ($data['status'] == 1) {
+            return response()->json(['code' => 400, 'msg' => '该商品上架中,无法删除']);
+        }
+        $res = Product::where('id', $id)->delete();
+        if ($res) {
+            return response()->json(['code' => 200, 'msg' => '商品删除成功']);
+
+        }
+
+    }
+
+
+    /*
+    * update the product status
+    */
+
+
+    public function updateProductStatus(Product $id)
+    {
+        $id->status = $id->status == 1 ? 0 : 1;
+        $res = $id->save();
+        if ($res) {
+            $msg = $id->status == 1 ? '已上架' : '下架中';
+            return response()->json(['code' => 200, 'msg' => $msg]);
+
+        } else {
+            return response()->json(['code' => 400, 'msg' => '内部异常,请稍后再试']);
+        }
+
+
     }
 }

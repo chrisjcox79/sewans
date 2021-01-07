@@ -20,6 +20,7 @@ class CreateAdminsTable extends Migration
             $table->string('phone')->unique()->nullable();
             $table->integer('role_id')->default(1);
             $table->string('password');
+            $table->rememberToken();
             $table->timestamps();
         });
     }

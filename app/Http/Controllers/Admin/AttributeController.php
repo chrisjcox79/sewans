@@ -188,4 +188,6 @@ class AttributeController extends AdminController
         $attribute->delete();
         return response()->json(['code' => 200, 'msg' => '删除成功']);
     }
+
+
 }

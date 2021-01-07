@@ -46,6 +46,7 @@ Route::prefix('/manager_admin_auth')->group(function () {
     Route::resource('users','Admin\UserController');
     Route::post('/oss_upload_token','Admin\OssUploadController@ossUpload')->name('oss.upload');
     Route::post('/ossImageUpload','Admin\OssUploadController@ossImageUpload');
+    Route::patch('/updateProductStatus/{id}/status','Admin\ProductController@updateProductStatus')->name('updateProductStatus');
 });
 
 
