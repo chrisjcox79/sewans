@@ -26,8 +26,9 @@
     </nav>
     @include('admin.layout.error')
     @include('admin.layout.message')
-    <form class="cmxform" id="" method="POST" action="{{ route('product.store') }}" enctype="multipart/form-data">
-
+    <form class="cmxform" id="" method="POST" action="{{ route('product.update',$data["id"]) }}" enctype="multipart/form-data">
+        @csrf
+        @method('PATCH')
         <div class="row">
             <div class="col-lg-6 grid-margin stretch-card">
                 <div class="card">
@@ -297,7 +298,7 @@
                 <div class="card">
                     <div class="card-body">
                         <h6 class="card-title">商品相册</h6>
-                        <div id="wrapper" data-images="{{json_encode($data['images'])}}"></div>
+                        <div id="wrapper" data-images="{{json_encode($data['product_images'])}}"></div>
                         <div class="dropzone" id="my-awesome-dropzone"></div>
 
                     </div>
@@ -380,6 +381,7 @@
             </div>
 
         </div>
+        <input type="hidden" id="delete_image" data-url="">
         <div class="row">
             <div class="col">
                 <button class="btn btn-success float-right" type="submit">添加</button>
@@ -748,13 +750,60 @@
 
                 init: function () {
                     let arr = $('#wrapper').data('images');
-                    myDropzone = this;
+
+                   let myDropzone = this;
                     for (v of arr) {
-                        let mockFile = {name: v, size: "125"};
+                        let mockFile = {name: v.small_img, size: "125",imageID:v.id};
                         myDropzone.emit("addedfile", mockFile);
-                        myDropzone.emit("thumbnail", mockFile, v + ',h_120,w_120');
-                        myDropzone.emit("complete", v);
+                        myDropzone.emit("thumbnail", mockFile, v.small_img + ',h_120,w_120');
+                        myDropzone.emit("complete", v.small_img);
+                    };
+                    // this.on("removedfile", function(file) {
+                    //     if (window.confirm("Do you really want to leave?")) {
+                    //         window.open("exit.html", "Thanks for Visiting!");
+                    //     }
+                    //     return;
+                    //
+                    //
+                    //
+                    //
+                    // });
+                },
+                // removedfile:function(file){
+                //    this.removeFile(file)
+                //     console.log(file.imageID)
+                // },
+                removedfile: function(file) {
+                    let id = file.imageID;
+
+                    // $.ajax({
+                    //     type: 'POST',
+                    //     url: 'upload.php',
+                    //     data: {name: name,request: 2},
+                    //     sucess: function(data){
+                    //         console.log('success: ' + data);
+                    //     }
+                    // });
+                    if (window.confirm("是否确认删除该图片?")) {
+                        $.ajax({
+                            type: "DELETE",
+                            url: "/manager_admin_auth/deleteProductImage/"+id,
+                            dataType: "JSON",
+                            data: {
+                                '_token': '{{csrf_token()}}'
+                            },
+                            success: function (response) {
+                                if (response.code != 200) {
+                                   alert(response.msg);
+                                }
+                                alert(response.msg);
+                                var _ref;
+                                return (_ref = file.previewElement) != null ? _ref.parentNode.removeChild(file.previewElement) : void 0;
+                            }
+                        });
+
                     }
+
                 },
                 accept: function (file, done) {
 
@@ -796,27 +845,28 @@
 
             });
             $("#product_thumb").dropzone({
-
+                url: 'https://sewans-upload.oss-cn-shanghai.aliyuncs.com',
+                method: "post",
+                autoProcessQueue: true,
+                timeout: null,
+                maxFiles:1,
+                addRemoveLinks: true,
                 init: function () {
 
 
                     let url = $("#imgThumb").data('thumb');
                     let suffix = url.substr(-11).replace(/\d+/g, "120");
                     let newUrl = url.slice(0, -11) + suffix;
-                    myDropzone = this;
-                    var mockFile = {name: url, size: "125"};
+                    let myDropzone = this;
+                    let mockFile = {name: url, size: "125",id:111};
                     myDropzone.emit("addedfile", mockFile);
                     myDropzone.emit("thumbnail", mockFile, newUrl);
                     myDropzone.emit("complete", mockFile);
                 },
-                url: 'https://sewans-upload.oss-cn-shanghai.aliyuncs.com',
-                method: "post",
-                autoProcessQueue: true,
-                addRemoveLinks: true,
-                maxfiles: 1,
-                timeout: null,
-                thumbnailHeight: 120,
-                thumbnailWidth: 120,
+                removedfile:function(file){
+                    console.log(file.id)
+                },
+
                 accept: function (file, done) {
 
                     $.ajax({

@@ -740,7 +740,7 @@
                 url: 'https://sewans-upload.oss-cn-shanghai.aliyuncs.com',
                 method: "post",
                 autoProcessQueue: true,
-                maxfiles: 1,
+                maxFiles:1,
                 timeout: null,
                 accept: function (file, done) {
 

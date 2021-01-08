@@ -58,19 +58,9 @@ class ProductController extends AdminController
         DB::beginTransaction();
         try {
 
-            $data["product_thumb"] = getenv('OSS_BUCKET_URL').'/'.$data["product_thumb"] . '?x-oss-process=image/resize,m_fixed,h_350,w_270';
+            $data["product_thumb"] = getenv('OSS_BUCKET_URL') . '/' . $data["product_thumb"] . '?x-oss-process=image/resize,m_fixed,h_350,w_270';
             $product = Product::create($data);
-            foreach ($data['goods_images'] as $img) {
-                $small_img = getenv('OSS_BUCKET_URL')  .'/'. $img . '?x-oss-process=image/resize,m_fixed,h_350,w_270';
-                $big_img = getenv('OSS_BUCKET_URL') . '/'.$img . '?x-oss-process=image/resize,m_fixed,h_555,w_555';
-                $row = [
-                    'product_id' => $product->id,
-                    'small_img' => $small_img,
-                    'big_img' => $big_img,
-                ];
-                ProductImages::create($row);
-
-            }
+            self::handleProductImageUpload($data,$product->id);
 
             foreach ($data['item'] as $item) {
                 $item['product_id'] = $product->id;
@@ -114,23 +104,23 @@ class ProductController extends AdminController
 
 
         $data = Product::with('brands', 'productImages', 'productSpec', 'category')->find($product->id)->toArray();
-        foreach ($data['product_images'] as $v){
-            $data['images'][] = rtrim($v['small_img'],'h_350,w_270');
+        foreach ($data['product_images'] as $k => $v) {
+            $data['product_images'][$k]['small_img'] = rtrim($v['small_img'], 'h_350,w_270');
         }
-        foreach ($data['product_spec'] as $k=>$v){
-            foreach (explode(' ',$v["value_names"]) as $i=>$j){
-                $data['product_spec'][$k][substr($j,'0',strrpos($j,':'))]=substr($j,strrpos($j,':')+1);
+        foreach ($data['product_spec'] as $k => $v) {
+            foreach (explode(' ', $v["value_names"]) as $i => $j) {
+                $data['product_spec'][$k][substr($j, '0', strrpos($j, ':'))] = substr($j, strrpos($j, ':') + 1);
             }
         }
 
-        $pid_path = explode('_',$data["category"]["pid_path"]);
+        $pid_path = explode('_', $data["category"]["pid_path"]);
         $category_one = Category::where('pid', 0)->get();
         $category_two = Category::where('pid', $pid_path[1])->get();
         $category_three = Category::where('pid', $pid_path[2])->get();
         $brands = Brands::all();
         $types = GoodsType::where('status', 1)->get();
 
-        return view('admin.pages.product.edit',compact('data','category_one','category_two','category_three','brands','types'));
+        return view('admin.pages.product.edit', compact('data', 'category_one', 'category_two', 'category_three', 'brands', 'types'));
 
     }
 
@@ -144,6 +134,24 @@ class ProductController extends AdminController
     public function update(Request $request, $id)
     {
         //
+        $data = $request->all();
+
+        DB::beginTransaction();
+        try {
+            if (isset($data["product_thumb"]) && !empty($data["product_thumb"])) {
+                $data["product_thumb"] = getenv('OSS_BUCKET_URL') . '/' . $data["product_thumb"] . '?x-oss-process=image/resize,m_fixed,h_350,w_270';
+            }
+            $product = ProductImages::where('id', $id)->update($data);
+            if (isset($data["product_images"]) && !empty($data["product_images"])) {
+                self::handleProductImageUpload($data,$id);
+
+            }
+
+            DB::commit();
+        } catch (\Exception $e) {
+            DB::rollBack();
+        }
+
     }
 
     /**
@@ -186,5 +194,38 @@ class ProductController extends AdminController
         }
 
 
+    }
+
+    /**
+     * @delete product image
+     */
+    public function deleteProductImage(ProductImages $id)
+    {
+
+
+        $res = $id->delete();
+        if ($res) {
+            return response()->json(['code' => 200, 'msg' => '删除成功']);
+
+        } else {
+            return response()->json(['code' => 400, 'msg' => '删除失败']);
+
+        }
+
+        return response()->json(['code' => 400, 'msg' => '内部异常,图片不存在']);
+    }
+
+    private static function  handleProductImageUpload($data,$id){
+        foreach ($data['goods_images'] as $img) {
+            $small_img = getenv('OSS_BUCKET_URL') . '/' . $img . '?x-oss-process=image/resize,m_fixed,h_350,w_270';
+            $big_img = getenv('OSS_BUCKET_URL') . '/' . $img . '?x-oss-process=image/resize,m_fixed,h_555,w_555';
+            $row = [
+                'product_id' => $id,
+                'small_img' => $small_img,
+                'big_img' => $big_img,
+            ];
+            ProductImages::create($row);
+
+        }
     }
 }
