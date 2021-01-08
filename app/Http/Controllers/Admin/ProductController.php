@@ -62,7 +62,7 @@ class ProductController extends AdminController
             $product = Product::create($data);
             foreach ($data['goods_images'] as $img) {
                 $small_img = getenv('OSS_BUCKET_URL')  .'/'. $img . '?x-oss-process=image/resize,m_fixed,h_350,w_270';
-                $big_img = getenv('OSS_BUCKET_URL') . '/'.$img . '?x-oss-process=image/resize,m_fixed,h_625,w_485';
+                $big_img = getenv('OSS_BUCKET_URL') . '/'.$img . '?x-oss-process=image/resize,m_fixed,h_555,w_555';
                 $row = [
                     'product_id' => $product->id,
                     'small_img' => $small_img,
