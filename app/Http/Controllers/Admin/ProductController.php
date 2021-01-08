@@ -59,8 +59,9 @@ class ProductController extends AdminController
         try {
 
             $data["product_thumb"] = getenv('OSS_BUCKET_URL') . '/' . $data["product_thumb"] . '?x-oss-process=image/resize,m_fixed,h_350,w_270';
+            $data["product_content"] = clean( $data["product_content"]);
             $product = Product::create($data);
-            self::handleProductImageUpload($data,$product->id);
+            self::handleProductImageUpload($data, $product->id);
 
             foreach ($data['item'] as $item) {
                 $item['product_id'] = $product->id;
@@ -68,17 +69,38 @@ class ProductController extends AdminController
             }
             DB::commit();
             session()->flash('success', '商品添加成功');
-            return redirect()->route('products.index');
+            return redirect()->route('product.index');
         } catch (Exception $e) {
 
 
             DB::rollBack();
 
             session()->flash('danger', '商品添加失败');
-            //return redirect()->back();
+            return redirect()->back();
         }
 
 
+    }
+
+    /**
+     * Insert the image and handle the thumb method
+     * @param $data
+     * @param $id
+     *
+     */
+    private static function handleProductImageUpload($data, $id)
+    {
+        foreach ($data['goods_images'] as $img) {
+            $small_img = getenv('OSS_BUCKET_URL') . '/' . $img . '?x-oss-process=image/resize,m_fixed,h_350,w_270';
+            $big_img = getenv('OSS_BUCKET_URL') . '/' . $img . '?x-oss-process=image/resize,m_fixed,h_555,w_555';
+            $row = [
+                'product_id' => $id,
+                'small_img' => $small_img,
+                'big_img' => $big_img,
+            ];
+            ProductImages::create($row);
+
+        }
     }
 
     /**
@@ -113,6 +135,7 @@ class ProductController extends AdminController
             }
         }
 
+
         $pid_path = explode('_', $data["category"]["pid_path"]);
         $category_one = Category::where('pid', 0)->get();
         $category_two = Category::where('pid', $pid_path[1])->get();
@@ -131,7 +154,7 @@ class ProductController extends AdminController
      * @param int $id
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, $id)
+    public function update(Request $request, Product $product)
     {
         //
         $data = $request->all();
@@ -141,15 +164,23 @@ class ProductController extends AdminController
             if (isset($data["product_thumb"]) && !empty($data["product_thumb"])) {
                 $data["product_thumb"] = getenv('OSS_BUCKET_URL') . '/' . $data["product_thumb"] . '?x-oss-process=image/resize,m_fixed,h_350,w_270';
             }
-            $product = ProductImages::where('id', $id)->update($data);
+            $data["product_content"] = clean( $data["product_content"]);
+                $product->update($data);
             if (isset($data["product_images"]) && !empty($data["product_images"])) {
-                self::handleProductImageUpload($data,$id);
+                self::handleProductImageUpload($data, $product->id);
 
             }
-
+            foreach ($data["item"] as $spec) {
+                ProductSpec::where('id', $spec["id"])->update($spec);
+            }
             DB::commit();
-        } catch (\Exception $e) {
+            session()->flash('success', '商品修改成功');
+            return redirect()->route('product.index');
+        } catch (Exception $e) {
             DB::rollBack();
+            dd($e->getMessage());
+            session()->flash('danger', '商品修改失败');
+           return redirect()->back();
         }
 
     }
@@ -175,11 +206,12 @@ class ProductController extends AdminController
 
     }
 
-
-    /*
-    * update the product status
-    */
-
+    /**
+     * Update the product status
+     * @param Product $id
+     * @return \Illuminate\Http\JsonResponse
+     *
+     */
 
     public function updateProductStatus(Product $id)
     {
@@ -197,7 +229,10 @@ class ProductController extends AdminController
     }
 
     /**
-     * @delete product image
+     * Delete the product images
+     * @param ProductImages $id
+     * @return \Illuminate\Http\JsonResponse
+     * @throws \Exception
      */
     public function deleteProductImage(ProductImages $id)
     {
@@ -213,19 +248,5 @@ class ProductController extends AdminController
         }
 
         return response()->json(['code' => 400, 'msg' => '内部异常,图片不存在']);
-    }
-
-    private static function  handleProductImageUpload($data,$id){
-        foreach ($data['goods_images'] as $img) {
-            $small_img = getenv('OSS_BUCKET_URL') . '/' . $img . '?x-oss-process=image/resize,m_fixed,h_350,w_270';
-            $big_img = getenv('OSS_BUCKET_URL') . '/' . $img . '?x-oss-process=image/resize,m_fixed,h_555,w_555';
-            $row = [
-                'product_id' => $id,
-                'small_img' => $small_img,
-                'big_img' => $big_img,
-            ];
-            ProductImages::create($row);
-
-        }
     }
 }

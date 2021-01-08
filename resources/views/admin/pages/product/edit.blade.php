@@ -28,7 +28,7 @@
     @include('admin.layout.message')
     <form class="cmxform" id="" method="POST" action="{{ route('product.update',$data["id"]) }}" enctype="multipart/form-data">
         @csrf
-        @method('PATCH')
+        {{ method_field('PUT') }}
         <div class="row">
             <div class="col-lg-6 grid-margin stretch-card">
                 <div class="card">
@@ -255,7 +255,7 @@
                                     <div class="form-check">
                                         <label class="form-check-label">
                                             <input type="radio" class="form-check-input" name="status"
-                                                   id="is_recommend1" value="0" {{$data["status"]==1 ?'checked':''}}>
+                                                   id="is_recommend1" value="0" {{$data["status"]==0 ?'checked':''}}>
                                             否
                                         </label>
                                     </div>
@@ -426,6 +426,7 @@
                 <td><input class="item_price form-control" name="item[${v.value_ids}][price]" value="${v.price}">
                     <input type="hidden" name="item[${v.value_ids}][value_names]" value="${v.value_names}">
                     <input type="hidden" name="item[${v.value_ids}][value_ids]" value="${v.value_ids}">
+                    <input type="hidden" name="item[${v.value_ids}][id]" value="${v.id}">
                 </td>
                 <td><input class="item_cost_price form-control" name="item[${v.value_ids}][cost_price]" value="${v.cost_price}"></td>
                 <td><input class="item_store_count form-control" name="item[${v.value_ids}][store_count]" value="${v.store_count}"></td>
