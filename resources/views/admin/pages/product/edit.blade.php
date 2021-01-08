@@ -21,7 +21,7 @@
     <nav class="page-breadcrumb">
         <ol class="breadcrumb">
             <li class="breadcrumb-item"><a href="#">商品管理</a></li>
-            <li class="breadcrumb-item active" aria-current="page">新增商品</li>
+            <li class="breadcrumb-item active" aria-current="page">修改商品</li>
         </ol>
     </nav>
     @include('admin.layout.error')
@@ -47,7 +47,7 @@
                                 <div class="col-sm-6">
                                     <div class="form-group">
                                         <label for="name">商品价格</label>
-                                        <input class="form-control" name="product_price" type="number"
+                                        <input class="form-control" name="product_price" type="number" id="product_price"
                                                autocomplete="off"
                                                value="{{ $data["product_price"] }}">
                                     </div>
@@ -59,7 +59,7 @@
                                 <div class="col-sm-6">
                                     <div class="form-group">
                                         <label for="name">市场价格</label>
-                                        <input class="form-control" name="market_price" type="number" autocomplete="off"
+                                        <input class="form-control" name="market_price" type="number" autocomplete="off" id="market_price"
                                                value="{{$data["market_price"] }}">
                                     </div>
                                 </div>
@@ -76,12 +76,9 @@
                             <div class="row">
                                 <div class="col-sm-6">
                                     <div class="form-group">
-                                        <div class=""><label for="name">商品货号</label> <span href="#"
-                                                                                           class="badge badge-primary float-right"
-                                                                                           style="cursor: pointer"
-                                                                                           id="product_code_generate">自动产生</span>
+                                        <div class=""><label for="name">商品货号</label>
                                         </div>
-                                        <input class="form-control" name="product_code" type="text"
+                                        <input class="form-control" name="product_code" type="text" disabled
                                                autocomplete="off"
                                                value="{{ $data["product_code"] }}">
 
@@ -90,7 +87,7 @@
                                 <div class="col-sm-6">
                                     <div class="form-group">
                                         <label for="name">SKU编号</label>
-                                        <input id="name" class="form-control" name="sku_code" type="text"
+                                        <input id="name" class="form-control" name="sku_code" type="text" disabled
                                                value="{{ $data["sku_code"] }}">
 
                                     </div>
@@ -448,8 +445,10 @@
                 var item_store_alert = $('#item_store_alert').val();
                 $('.item_price').val(item_price);
                 $('.item_cost_price').val(item_cost_price);
+                $('#market_price').val(item_cost_price);
                 $('.item_store_count').val(item_store_count);
                 $('.item_store_alert').val(item_store_alert);
+                $('#product_price').val(item_price);
 
             });
             $(document).on('click', '.delete-item', function () {
@@ -740,6 +739,15 @@
 
 
             });
+
+
+            $(document).on('click', "#product_sku_generate", function () {
+                let $code = 'SKU'+ new Date().getFullYear() + Math.random().toString(36).substring(7).toUpperCase();
+
+                $("input[name=sku_code]").val($code);
+
+
+            });
             $("#my-awesome-dropzone").dropzone({
                 url: 'https://sewans-upload.oss-cn-shanghai.aliyuncs.com',
                 method: "post",
@@ -759,21 +767,9 @@
                         myDropzone.emit("thumbnail", mockFile, v.small_img + ',h_120,w_120');
                         myDropzone.emit("complete", v.small_img);
                     };
-                    // this.on("removedfile", function(file) {
-                    //     if (window.confirm("Do you really want to leave?")) {
-                    //         window.open("exit.html", "Thanks for Visiting!");
-                    //     }
-                    //     return;
-                    //
-                    //
-                    //
-                    //
-                    // });
+
                 },
-                // removedfile:function(file){
-                //    this.removeFile(file)
-                //     console.log(file.imageID)
-                // },
+
                 removedfile: function(file) {
                     let id = file.imageID;
 
@@ -903,42 +899,7 @@
 
 
                 }
-                {{--  autoProcessQueue : true,--}}
-                {{-- addRemoveLinks: true,--}}
-                {{-- url: 'https://sewans-upload.oss-cn-shanghai.aliyuncs.com',--}}
 
-                {{-- // renameFile: function (file) {--}}
-                {{-- //    return  md5(file.name) + file.name;--}}
-                {{-- //--}}
-                {{-- // },--}}
-                {{--init:function(){--}}
-                {{--     $.ajax({--}}
-                {{--         url: "{{route('oss.upload')}}",--}}
-                {{--         data: {--}}
-                {{--             _token: '{{csrf_token()}}'--}}
-                {{--         },--}}
-                {{--         type: 'POST',--}}
-                {{--         dataType: 'JSON',--}}
-                {{--         success: function (re) {--}}
-                {{--             var res = JSON.parse(re);--}}
-                {{--             var policy = res.policy;--}}
-                {{--             var KeyId =res.accessid;--}}
-                {{--             var signature = res.signature;--}}
-
-                {{--         }--}}
-                {{--     });--}}
-                {{-- },--}}
-                {{-- sending: function(file, xhr, formData) {--}}
-
-                {{--     formData.append("key",md5(file.name) + file.name);--}}
-                {{--    formData.append("policy",policy);--}}
-                {{--    formData.append("KeyId" , KeyId);--}}
-                {{--     formData.append("success_action_status", "200");//让服务端返回200,不然，默认会返回204--}}
-                {{--      formData.append("signature",res.signature);--}}
-
-                {{--     console.log(formData)--}}
-
-                {{-- }--}}
 
 
             });

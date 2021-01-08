@@ -92,6 +92,10 @@
                                 <div class="col-sm-6">
                                     <div class="form-group">
                                         <label for="name">SKU编号</label>
+                                        <span href="#"
+                                              class="badge badge-primary float-right"
+                                              style="cursor: pointer"
+                                              id="product_sku_generate">自动产生</span>
                                         <input id="name" class="form-control" name="sku_code" type="text"
                                                value="{{ old('sku_code') }}">
 
@@ -687,6 +691,15 @@
                 let $code = String(Math.random()).substring(2, 15);
 
                 $("input[name=product_code]").val($code);
+
+
+            });
+
+
+            $(document).on('click', "#product_sku_generate", function () {
+                let $code = 'SKU'+ new Date().getFullYear() + Math.random().toString(36).substring(7).toUpperCase();
+
+                $("input[name=sku_code]").val($code);
 
 
             });
