@@ -112,9 +112,18 @@ class ProductController extends AdminController
     {
         //
 
-        $data = Product::with('brands', 'productImages', 'productSpec', 'category')->find($product->id);
 
-        $pid_path = explode('_',$data->category->pid_path);
+        $data = Product::with('brands', 'productImages', 'productSpec', 'category')->find($product->id)->toArray();
+        foreach ($data['product_images'] as $v){
+            $data['images'][] = rtrim($v['small_img'],'h_350,w_270');
+        }
+        foreach ($data['product_spec'] as $k=>$v){
+            foreach (explode(' ',$v["value_names"]) as $i=>$j){
+                $data['product_spec'][$k][substr($j,'0',strrpos($j,':'))]=substr($j,strrpos($j,':')+1);
+            }
+        }
+
+        $pid_path = explode('_',$data["category"]["pid_path"]);
         $category_one = Category::where('pid', 0)->get();
         $category_two = Category::where('pid', $pid_path[1])->get();
         $category_three = Category::where('pid', $pid_path[2])->get();
