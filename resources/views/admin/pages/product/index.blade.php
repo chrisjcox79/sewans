@@ -3,7 +3,7 @@
 @section('content')
     <nav class="page-breadcrumb">
         <ol class="breadcrumb">
-            <li class="breadcrumb-item"><a href="#">Tables</a></li>
+            <li class="breadcrumb-item"><a href="#">商品回收站</a></li>
             <li class="breadcrumb-item active" aria-current="page">Basic Tables</li>
         </ol>
     </nav>
@@ -307,13 +307,13 @@
             let url = $(this).data("url");
             event.preventDefault();
             Swal.fire({
-                title: `你确定要删除${name}?`,
-                text: "将无法复原",
+                title: `你确定要将${name}移至回收站?`,
+                text: "可以在回收站复原",
                 icon: 'warning',
                 showCancelButton: true,
                 confirmButtonColor: '#3085d6',
                 cancelButtonColor: '#d33',
-                confirmButtonText: '是的,删除'
+                confirmButtonText: '是的,移至回收站'
             }).then((result) => {
                 if (result.isConfirmed) {
                     $.ajax({

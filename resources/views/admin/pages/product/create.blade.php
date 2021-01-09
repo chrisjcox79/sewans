@@ -390,6 +390,7 @@
     <script src="{{ asset('backend/assets/plugins/dropify/js/dropify.min.js') }}"></script>
     <script src="{{ asset('backend/assets/plugins/dropzone/dropzone.min.js') }}"></script>
     <script src="{{ asset('backend/assets/plugins/tinymce/tinymce.min.js') }}"></script>
+    <script src="{{ asset('backend/assets/plugins/oss/oss.js') }}"></script>
 
 
 

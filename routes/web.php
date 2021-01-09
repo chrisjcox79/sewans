@@ -48,6 +48,8 @@ Route::prefix('/manager_admin_auth')->group(function () {
     Route::post('/ossImageUpload','Admin\OssUploadController@ossImageUpload');
     Route::patch('/updateProductStatus/{id}/status','Admin\ProductController@updateProductStatus')->name('updateProductStatus');
     Route::delete('/deleteProductImage/{id}','Admin\ProductController@deleteProductImage')->name('deleteProductImage');
+    Route::resource('recycle','Admin\ProductRecycleController');
+    Route::patch('recycle/restore/{id}','Admin\ProductRecycleController@restore')->name('recycle.restore');
 });
 
 

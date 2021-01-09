@@ -25,6 +25,7 @@ class ProductController extends AdminController
     public function index()
     {
         //
+
         $products = Product::paginate(30);
         return view('admin.pages.product.index', compact('products'));
     }
@@ -249,4 +250,5 @@ class ProductController extends AdminController
 
         return response()->json(['code' => 400, 'msg' => '内部异常,图片不存在']);
     }
+
 }

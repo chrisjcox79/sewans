@@ -1,3 +1,5 @@
+
+
 $(function() {
   'use strict';
 
@@ -23,7 +25,8 @@ $(function() {
             var xhr, formData;
             xhr = new XMLHttpRequest();
             xhr.withCredentials = false;
-            xhr.open('POST', '/manager_admin_auth/ossImageUpload');
+            console.log(blobInfo);
+            // xhr.open('POST', '/manager_admin_auth/ossImageUpload');
 
             xhr.upload.onprogress = function(e){
                 progress(e.loaded / e.total * 100);

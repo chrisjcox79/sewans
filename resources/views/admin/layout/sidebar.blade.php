@@ -58,7 +58,7 @@
         </a>
       </li>
       <li class="nav-item {{ active_class(['apps/calendar']) }}">
-        <a href="{{ url('/apps/calendar') }}" class="nav-link">
+        <a href="{{ route('recycle.index') }}" class="nav-link">
           <i class="link-icon" data-feather="calendar"></i>
           <span class="link-title">商品回收站</span>
         </a>
